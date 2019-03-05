@@ -23,7 +23,7 @@ function create() {
   if (name && desc) {
     disable(true);
     if (acceptable(name)) {
-      axios.post('/api/create', { name: name, desc: desc })
+      axios.post('https://memvers-api.sparcs.org/api/create', { name: name, desc: desc }, {withCredentials: true})
       .then(res => {
         if (res.data.expired) window.location.href = '/login';
         else if (res.data.result) {

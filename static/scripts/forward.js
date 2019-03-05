@@ -5,7 +5,7 @@ function disable(b) {
 
 function get() {
   disable(true);
-  axios.get('/api/forward')
+  axios.get('https://memvers-api.sparcs.org/api/forward', {withCredentials: true})
   .then(res => {
     if (res.data.expired) window.location.href = '/login';
     else {
@@ -23,7 +23,7 @@ function get() {
 function save() {
   disable(true);
   let mail = $('#mail').val();
-  axios.post('/api/forward', { mail: mail })
+  axios.post('https://memvers-api.sparcs.org/api/forward', { mail: mail }, {withCredentials: true})
   .then(res => {
     if (res.data.expired) window.location.href = '/login';
     else if (res.data.result) {

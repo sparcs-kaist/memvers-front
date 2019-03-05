@@ -9,7 +9,7 @@ function login() {
   let pw = $('#pw').val();
   if (un && pw) {
     disable(true);
-    axios.post('/api/login', { un: un, pw: pw })
+    axios.post('https://memvers-api.sparcs.org/api/login', { un: un, pw: pw }, {withCredentials: true})
     .then(res => {
       if (res.data.result)
         window.location.href = '/';
@@ -27,7 +27,7 @@ function login() {
 }
 
 $(document).ready(() => {
-  axios.get('/api/un')
+  axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
   .then(res => {
     if (!res.data.expired) window.location.href = '/';
   });

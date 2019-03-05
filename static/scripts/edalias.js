@@ -7,7 +7,7 @@ function disable(b) {
 
 function get() {
   disable(true);
-  axios.get('/api/edalias')
+  axios.get('https://memvers-api.sparcs.org/api/edalias', {withCredentials: true})
   .then(res => {
     if (res.data.expired) window.location.href = '/login';
     else {
@@ -43,7 +43,7 @@ function update() {
   let removed = aliases.filter(m => {
     return !$(`#check-${m}`).prop('checked');
   });
-  axios.post('/api/edalias', { added: added, removed: removed })
+  axios.post('https://memvers-api.sparcs.org/api/edalias', { added: added, removed: removed }, {withCredentials: true})
   .then(res => {
     if (res.data.expired) window.location.href = '/login';
     else if (res.data.result) {

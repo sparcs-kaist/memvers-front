@@ -14,7 +14,7 @@ function add() {
   if (un && name && npass && cpass) {
     disable(true);
     if (npass === cpass) {
-        axios.post('/api/wheel/add', { un: un, name: name, npass: npass })
+        axios.post('https://memvers-api.sparcs.org/api/wheel/add', { un: un, name: name, npass: npass }, {withCredentials: true})
         .then(res => {
           if (res.data.expired) window.location.href = '/login';
           else if (res.data.result) {

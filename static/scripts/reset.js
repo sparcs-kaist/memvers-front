@@ -16,7 +16,7 @@ function change() {
   let npass = $('#npass').val();
   let cpass = $('#cpass').val();
   if (npass === cpass) {
-    axios.post('/api/reset' + serial(), { npass: npass })
+    axios.post('https://memvers-api.sparcs.org/api/reset' + serial(), { npass: npass }, {withCredentials: true})
     .then(res => {
       if (res.data.result) {
         if (res.data.succ) {
@@ -44,7 +44,7 @@ function change() {
 }
 
 $(document).ready(() => {
-  axios.get('/api/reset' + serial())
+  axios.get('https://memvers-api.sparcs.org/api/reset' + serial(), {withCredentials: true})
   .then(res => {
     if (!res.data.result) window.location.href = '/login';
   })

@@ -9,7 +9,7 @@ function search() {
   console.log(name);
   if (name) {
     disable(true);
-    axios.post('/api/nugus', { name: name })
+    axios.post('https://memvers-api.sparcs.org/api/nugus', { name: name }, {withCredentials: true})
     .then(res => {
       if (res.data.expired) window.location.href = '/login';
       else if (res.data.result) {

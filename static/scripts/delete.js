@@ -17,7 +17,7 @@ function del() {
   if (un && cf) {
     disable(true);
     if (hcf === cf) {
-      axios.post('/api/wheel/delete', { un: un })
+      axios.post('https://memvers-api.sparcs.org/api/wheel/delete', { un: un }, {withCredentials: true})
       .then(res => {
         if (res.data.expired) window.location.href = '/login';
         else if (res.data.result) {

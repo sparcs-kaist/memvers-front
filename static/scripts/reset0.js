@@ -7,7 +7,7 @@ function resetPassword() {
   let un = $('#un-reset').val();
   if (un) {
     disable(true);
-    axios.post('/api/reset', { un: un });
+    axios.post('https://memvers-api.sparcs.org/api/reset', { un: un }, {withCredentials: true});
     window.location.href = '/login';
   }
 }

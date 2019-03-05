@@ -12,7 +12,7 @@ function change() {
   if (opass && npass && cpass) {
     disable(true);
     if (npass === cpass) {
-      axios.post('/api/passwd', { opass: opass, npass: npass })
+      axios.post('https://memvers-api.sparcs.org/api/passwd', { opass: opass, npass: npass }, {withCredentials: true})
       .then(res => {
         if (res.data.expired) window.location.href = '/login';
         else if (res.data.result) {

@@ -10,7 +10,7 @@ function disable(b) {
 
 function get() {
   disable(true);
-  axios.get('/api/nugu')
+  axios.get('https://memvers-api.sparcs.org/api/nugu', {withCredentials: true})
   .then(res => {
     if (res.data.expired) window.location.href = '/login';
     else if (res.data.result) {
@@ -41,7 +41,7 @@ function save() {
       ($('#input-' + field).val());
     if (value !== obj[field]) nobj[field] = value;
   }
-  axios.post('/api/nugu', { nobj: nobj })
+  axios.post('https://memvers-api.sparcs.org/api/nugu', { nobj: nobj }, {withCredentials: true})
   .then(res => {
     if (res.data.expired) window.location.href = '/login';
     else if (res.data.result) {
