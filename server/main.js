@@ -1,18 +1,14 @@
 const express = require('express');
-const api = require('./api.js');
-const { port } = require('../config/config.js');
-const { logStr } = require('./log.js');
-
 const app = express();
+const port = process.env.PORT;
 
 function writeLog(req, res, next) {
-  logStr(req.url);
+  console.log(new Date().toString() + '\t' + req.url);
   next();
 }
 
 app.use(express.static('static'));
 app.use(writeLog);
-app.use('/api', api);
 app.set('views', __dirname + '/../static/views');
 app.engine('.html', require('ejs').renderFile);
 
@@ -41,6 +37,5 @@ app.get('/reset/:serial', (req, res) => {
 });
 
 app.listen(port, () => {
-  logStr(process.env.NODE_ENV);
-  logStr('The server running at port ' + port);
+  console.log('The server running at port ' + port);
 });

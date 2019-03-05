@@ -1,24 +1,17 @@
 {
-  "name": "wedalias",
+  "name": "memvers-front",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "",
   "scripts": {
-    "start": "NODE_ENV=production sudo -E node server/main.js",
-    "dev": "NODE_ENV=development sudo -E node server/main.js",
+    "start": "PORT=80 sudo -E node server/main.js",
     "lint": "./node_modules/.bin/eslint ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "connect-mongo": "^2.0.3",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "express-session": "^1.15.6",
-    "mongoose": "^5.4.14",
-    "mysql": "^2.16.0",
-    "nodemailer": "^5.1.1"
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "eslint": "^5.15.0",
