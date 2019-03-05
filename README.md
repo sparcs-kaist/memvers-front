@@ -1,3 +1,3 @@
-# SPARCS Web Edalias
-* For the initial deployment, use command `$ /bin/bash deploy.sh`.
-* To restart the service after `$ git pull`, use command `$ /bin/bash restart.sh`.
+# SPARCS Memvers Project Frontend
+* Memvers: Management of Electronic Mail via Visualized Editor and Registration for SPARCS
+* `$ npm run start`
