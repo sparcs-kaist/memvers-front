@@ -1,13 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
+import { BrowserRouter } from 'react-router-dom'
+
+import 'babel-polyfill'
 
 import Main from './components/Main'
 
 const render = Component => {
   ReactDOM.render(
     <AppContainer>
-      <Component />
+      <BrowserRouter>
+        <Component />
+      </BrowserRouter>
     </AppContainer>,
     document.getElementById('root')
   )
