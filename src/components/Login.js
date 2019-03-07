@@ -15,6 +15,12 @@ export default class Login extends Component {
     })
   }
 
+  isEnter = (e) => {
+    if (e.key == 'Enter') {
+      this.login();
+    }
+  }
+
   onPasswordChange = (e) => {
     this.setState({
       userpw: e.target.value
@@ -29,7 +35,7 @@ export default class Login extends Component {
     }
 
     try {
-      const payload = await axios.post('https://memvers-api.sparcs.org/api/login', queryObject, {withCredentials: false})
+      const payload = await axios.post('https://memvers-api.sparcs.org/api/login', queryObject, {withCredentials: true})
       if (payload.data.result) {
         this.props.history.push('/menu')
       } else {
@@ -42,7 +48,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div>
+      <div onKeyPress={this.isEnter}>
         <div className="input-field">
           <TextField label="username" onChange={(e) => this.onUsernameChange(e)}/>
           <TextField label="password" onChange={(e) => this.onPasswordChange(e)}/>

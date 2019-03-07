@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const port = 12345;
+const port = 80;
 
 module.exports = {
   mode: 'development',
@@ -48,5 +48,6 @@ module.exports = {
     historyApiFallback: true,
     open: true,
     hot: true,
+    disableHostCheck: true,
   }
 }
