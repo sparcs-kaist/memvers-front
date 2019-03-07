@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-
-import TextField from '@material-ui/core/TextField'
 import axios from 'axios'
 
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+
+import LoginStyle from './Login.css'
 export default class Login extends Component {
   state = {
     username: '',
@@ -49,18 +51,16 @@ export default class Login extends Component {
   render() {
     return (
       <div onKeyPress={this.isEnter}>
-        <div className="input-field">
+        <div className={LoginStyle.inputField}>
           <TextField label="username" onChange={(e) => this.onUsernameChange(e)}/>
-          <TextField label="password" onChange={(e) => this.onPasswordChange(e)}/>
+          <TextField type="password" label="password" onChange={(e) => this.onPasswordChange(e)}/>
         </div>
-
-        <div>
-          {this.state.username}
-        </div>
-
-        <div onClick={() => this.login()} style={{cursor: 'pointer'}}>
+        <Button
+          className={LoginStyle.button}
+          onClick={() => this.login()}
+        >
           Login
-        </div>
+        </Button>
       </div>
     )
   }

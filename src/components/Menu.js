@@ -7,10 +7,13 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 
 import ChangePassword from './MenuButtons/ChangePassword'
 import MenuStyle from './Menu.css'
+import { Button } from '@material-ui/core';
+import Modal from '@material-ui/core/Modal'
 
 export default class Menu extends Component {
   state = {
-    expanded: '비밀번호 변경',
+    isModalOpen: false,
+    expanded: '',
     isWheel: true,
   }
 
@@ -24,10 +27,28 @@ export default class Menu extends Component {
   }
 
   handleChange = (menu) => {
-    console.log(menu);
     this.setState({
-      expanded: menu
+      expanded: menu == this.state.expanded ? "" : menu
     })
+  }
+
+  checkLogout = () => {
+    this.setState({
+      isModalOpen: true
+    })
+  }
+
+  closeModal = () => {
+    this.setState({
+      isModalOpen: false
+    })
+  }
+
+  logout = () => {
+    axios.get('https://memvers-api.sparcs.org/api/logout', {withCredentials: true})
+      .then(
+        this.props.history.push('/login')
+      )
   }
 
   renderMenus = () => {
@@ -120,6 +141,31 @@ export default class Menu extends Component {
             null
           )
         }
+        <Button
+          onClick={() => this.checkLogout()}
+        >
+          로그아웃
+        </Button>
+
+        <Modal
+          open={this.state.isModalOpen}
+          onClose={this.closeModal}
+        >
+          <div className={MenuStyle.warningModal}>
+            정말 로그아웃 할까요?
+            <div className={MenuStyle.buttons}>
+              <Button
+                style={{marginLeft: 'auto'}}
+                onClick={() => this.closeModal()}
+              >
+                취소
+              </Button>
+              <Button onClick={() => this.logout()}>
+                로그아웃
+              </Button>
+            </div>
+          </div>
+        </Modal>
       </div>
     )
   }

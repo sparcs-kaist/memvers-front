@@ -15,7 +15,7 @@ const Main = () => {
       <Switch>
         <Route path="/menu" component={Menu} />
         <Route path="/login" component={Login} />
-        <Route path="/" render={props => <Redirect to="/login" />} />
+        <Route path="/" render={props => <Redirect to="/menu" />} />
       </Switch>
     </div>
   )
