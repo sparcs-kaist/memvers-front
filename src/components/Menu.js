@@ -4,12 +4,14 @@ import axios from 'axios';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import { Button } from '@material-ui/core';
+import Modal from '@material-ui/core/Modal'
 
 import ChangePassword from './MenuButtons/ChangePassword'
 import CreateList from './MenuButtons/CreateList'
+import Forwarding from './MenuButtons/Forwarding'
+
 import MenuStyle from './Menu.css'
-import { Button } from '@material-ui/core';
-import Modal from '@material-ui/core/Modal'
 
 export default class Menu extends Component {
   state = {
@@ -19,11 +21,19 @@ export default class Menu extends Component {
   }
 
   componentDidMount = async () => {
-    const payload = await axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
-    if (payload.data.expired) {
-      this.props.history.push('/login')
-    } else if (payload.data.un === 'wheel') {
-      this.setState({ isWheel: true })
+    try {
+      let payload = await axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
+      if (payload.data.expired) {
+        this.props.history.push('/login')
+      } else if (payload.data.un === 'wheel') {
+        this.setState({ isWheel: true })
+      }
+      payload = await axios.get('https://memvers-api.sparcs.org/api/forward', {withCredentials: true})
+      if (payload.data.expired) {
+        this.props.history.push('/login')
+      }
+    } catch (err) {
+      alert(err)
     }
   }
 
@@ -62,7 +72,7 @@ export default class Menu extends Component {
         component: <CreateList />
       },{
         name: "메일 포워딩 설정",
-        component: <ChangePassword />
+        component: <Forwarding />
       },{
         name: "Alias 편집",
         component: <ChangePassword />
