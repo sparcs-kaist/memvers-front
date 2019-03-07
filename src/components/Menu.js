@@ -6,6 +6,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 
 import ChangePassword from './MenuButtons/ChangePassword'
+import CreateList from './MenuButtons/CreateList'
 import MenuStyle from './Menu.css'
 import { Button } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal'
@@ -58,7 +59,7 @@ export default class Menu extends Component {
         component: <ChangePassword />
       },{
         name: "메일링 리스트 생성",
-        component: <ChangePassword />
+        component: <CreateList />
       },{
         name: "메일 포워딩 설정",
         component: <ChangePassword />
