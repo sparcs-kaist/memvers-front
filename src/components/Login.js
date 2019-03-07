@@ -23,9 +23,18 @@ export default class Login extends Component {
 
   login = async () => {
     const { username, userpw } = this.state
-    
+    const queryObject = {
+      un: username,
+      pw: userpw,
+    }
+
     try {
-      const data = await axios.post('https://memvers-api.sparcs.org/api/login', {un: username, pw: userpw}, {withCredentials: true})
+      const payload = await axios.post('https://memvers-api.sparcs.org/api/login', queryObject, {withCredentials: false})
+      if (payload.data.result) {
+        this.props.history.push('/menu')
+      } else {
+        alert("Login failed")
+      }
     } catch (err) {
       alert(err)
     }
