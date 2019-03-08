@@ -59,7 +59,6 @@ export default class EditNugu extends Component {
   }
 
   render() {
-    console.log(this.state.obj)
     return (
       <div className={EditNuguStyle.container}>
         {this.renderContent()}

@@ -33,10 +33,6 @@ export default class Menu extends Component {
       } else if (payload.data.un === 'wheel') {
         this.setState({ isWheel: true })
       }
-      payload = await axios.get('https://memvers-api.sparcs.org/api/forward', {withCredentials: true})
-      if (payload.data.expired) {
-        this.props.history.push('/login')
-      }
     } catch (err) {
       alert(err)
     }

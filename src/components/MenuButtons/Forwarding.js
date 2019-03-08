@@ -9,6 +9,17 @@ export default class Forwarding extends Component {
     mail: ''
   }
   
+  componentDidMount = async () => {
+    try {
+      const payload = await axios.get('https://memvers-api.sparcs.org/api/forward', {withCredentials: true})
+      if (payload.data.expired) {
+        this.props.history.push('/login')
+      } else this.setState({ mail: payload.data.mail })
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   save = async () => {
     const { mail } = this.state;
     try {
@@ -29,6 +40,7 @@ export default class Forwarding extends Component {
       <div>
         <TextField
           label="메일"
+          value={this.state.mail}
           onChange={(e) => this.setState({mail: e.target.value})}
         />
         <Button
