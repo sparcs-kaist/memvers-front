@@ -14,6 +14,7 @@ import Edalias from './MenuButtons/Edalias'
 import SearchOnNugu from './MenuButtons/SearchOnNugu'
 
 import MenuStyle from './Menu.css'
+import EditNugu from './MenuButtons/EditNugu';
 
 export default class Menu extends Component {
   state = {
@@ -80,7 +81,7 @@ export default class Menu extends Component {
         component: <Edalias />
       },{
         name: "Nugu 편집",
-        component: <ChangePassword />
+        component: <EditNugu />
       },{
         name: "Nugu 검색",
         component: <SearchOnNugu />

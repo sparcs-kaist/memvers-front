@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+}
+
+.list-container {
+  width: 100%;
+  margin-bottom: 10px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.list-container .title {
+  width: 30%;
+}
+
+.list-container .input {
+  width: 70%;
+}
