@@ -11,6 +11,15 @@ export default class Login extends Component {
     userpw: '',
   }
 
+  componentDidMount = async () => {
+    try {
+      const payload = await axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
+      if (!payload.data.expired) this.props.history.push('/menu')
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   onUsernameChange = (e) => {
     this.setState({
       username: e.target.value
