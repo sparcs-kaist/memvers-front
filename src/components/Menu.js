@@ -10,6 +10,8 @@ import Modal from '@material-ui/core/Modal'
 import ChangePassword from './MenuButtons/ChangePassword'
 import CreateList from './MenuButtons/CreateList'
 import Forwarding from './MenuButtons/Forwarding'
+import Edalias from './MenuButtons/Edalias'
+import SearchOnNugu from './MenuButtons/SearchOnNugu'
 
 import MenuStyle from './Menu.css'
 
@@ -75,13 +77,13 @@ export default class Menu extends Component {
         component: <Forwarding />
       },{
         name: "Alias 편집",
-        component: <ChangePassword />
+        component: <Edalias />
       },{
         name: "Nugu 편집",
         component: <ChangePassword />
       },{
         name: "Nugu 검색",
-        component: <ChangePassword />
+        component: <SearchOnNugu />
     }
     ].map((menu, i) => {
       return (
