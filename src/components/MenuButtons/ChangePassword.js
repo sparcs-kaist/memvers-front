@@ -33,7 +33,7 @@ export default class ChangePassword extends Component {
         alert(err)
       }
     } else {
-      alert("Password doesn not match.")
+      alert("Password does not match.")
     }
   }
 
