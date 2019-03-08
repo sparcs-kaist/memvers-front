@@ -22,9 +22,8 @@ export default class SearchOnNugu extends Component {
     try {
       const payload = await axios.post('https://memvers-api.sparcs.org/api/nugus', { name: querydata }, {withCredentials: true})
       if (payload.data.expired) window.location.href = '/login'
-      else if (payload.data.result) {
-        this.setState({ objs: payload.data.objs })
-      }
+      else if (payload.data.result) this.setState({ objs: payload.data.objs })
+      else if (!payload.data.result) this.setState({ objs: null }) 
     } catch (err) {
       alert(err)
     }
