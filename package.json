@@ -1,20 +1,41 @@
 {
-  "name": "memvers-front",
+  "name": "webpack-for-react",
   "version": "1.0.0",
-  "description": "",
-  "main": "",
+  "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "start": "PORT=80 sudo -E node server/main.js",
-    "lint": "./node_modules/.bin/eslint ."
+    "start": "webpack-dev-server --config webpack.config.dev.js",
+    "prebuild": "rimraf dist",
+    "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.prod.js"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "ejs": "^2.6.1",
-    "express": "^4.16.4"
+    "@babel/core": "^7.3.4",
+    "@material-ui/core": "^3.9.2",
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-prop-types": "^0.4.0",
+    "react-router-dom": "^4.3.1",
+    "semantic-ui-react": "^0.77.1",
+    "webpack-cli": "^3.2.3"
   },
   "devDependencies": {
-    "eslint": "^5.15.0",
-    "eslint-plugin-jquery": "^1.5.0"
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "cross-env": "^5.2.0",
+    "css-loader": "^0.28.10",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-webpack-plugin": "^3.0.4",
+    "postcss-loader": "^3.0.0",
+    "react-hot-loader": "^4.7.2",
+    "rimraf": "^2.6.3",
+    "style-loader": "^0.19.1",
+    "webpack": "^4.0.0",
+    "webpack-dev-server": "^3.0.0"
   }
 }

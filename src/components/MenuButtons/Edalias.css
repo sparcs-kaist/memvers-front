@@ -1,0 +1,34 @@
+.eda-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: left;
+}
+
+.list-container {
+  width: 100%;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.list-container .title {
+  width: 25%;
+  text-align: right;
+  margin-right: 5%;
+}
+
+.list-container .description {
+  font-size: 0.9rem;
+  overflow: hidden;
+  width: 55%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-container .checkbox {
+  margin: 0px;
+}

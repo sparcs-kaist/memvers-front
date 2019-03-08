@@ -1,0 +1,17 @@
+.lists-container {
+  margin-bottom: 50px;
+}
+
+.list-container {
+  width: 100%;
+  margin-bottom: 10px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.list-container .title {
+  width: 30%;
+}
