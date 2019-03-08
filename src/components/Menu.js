@@ -15,6 +15,8 @@ import SearchOnNugu from './MenuButtons/SearchOnNugu'
 
 import MenuStyle from './Menu.css'
 import EditNugu from './MenuButtons/EditNugu';
+import AddUser from './MenuForWheel/AddUser';
+import DeleteUser from './MenuForWheel/DeleteUser';
 
 export default class Menu extends Component {
   state = {
@@ -135,7 +137,7 @@ export default class Menu extends Component {
                     회원 추가
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
-                    휠만 가능
+                    <AddUser />
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
                 <ExpansionPanel
@@ -146,7 +148,7 @@ export default class Menu extends Component {
                     회원 삭제
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
-                    휠만 가능
+                    <DeleteUser />
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               </div>
