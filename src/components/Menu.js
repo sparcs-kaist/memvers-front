@@ -22,7 +22,7 @@ export default class Menu extends Component {
   state = {
     isModalOpen: false,
     expanded: '',
-    isWheel: true,
+    isWheel: false,
   }
 
   componentDidMount = async () => {
