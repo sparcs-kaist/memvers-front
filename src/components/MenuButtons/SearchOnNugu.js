@@ -31,7 +31,6 @@ export default class SearchOnNugu extends Component {
 
   renderContent = () => {
     const { objs } = this.state
-    console.log(objs)
     if (objs) {
       return objs.map((obj, i) => {
         return (
