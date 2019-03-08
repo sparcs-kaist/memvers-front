@@ -10,6 +10,7 @@ module.exports = {
     filename: 'static/[name].[hash].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
+    globalObject: 'this',
   },
   module: {
     rules: [
@@ -23,9 +24,6 @@ module.exports = {
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            {
-              loader: 'style-loader',
-            },
             {
               loader: 'css-loader',
               options: {
