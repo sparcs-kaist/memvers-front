@@ -31,18 +31,31 @@ export default class EditNugu extends Component {
     const { obj } = this.state
     if (obj) {
       return Object.keys(obj).map((item, i) => {
-        return (
-          <div key={i} className={EditNuguStyle.listContainer}>
-            <div className={EditNuguStyle.title}>
-              {item}
+        if (item == 'id' || item == 'created_on' || item == 'updated_on') {
+          return (
+            <div key={i} className={EditNuguStyle.listContainer}>
+              <div className={EditNuguStyle.title}>
+                {item}
+              </div>
+              <div className={EditNuguStyle.input}>
+                {obj[item]}
+              </div>
             </div>
-            <TextField
-              className={EditNuguStyle.input}
-              value={obj[item]}
-              onChange={(e) => this.handleChange(e, item)}
-            />
-          </div>
-        )
+          )
+        } else {
+          return (
+            <div key={i} className={EditNuguStyle.listContainer}>
+              <div className={EditNuguStyle.title}>
+                {item}
+              </div>
+              <TextField
+                className={EditNuguStyle.input}
+                value={obj[item]}
+                onChange={(e) => this.handleChange(e, item)}
+              />
+            </div>
+          )
+        }
       })
     }
   }

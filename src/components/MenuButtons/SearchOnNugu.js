@@ -32,17 +32,25 @@ export default class SearchOnNugu extends Component {
 
   renderContent = () => {
     const { objs } = this.state
+    console.log(objs)
     if (objs) {
-      const obj = objs[0]
-      return Object.keys(obj).map((item, i) => {
+      return objs.map((obj, i) => {
         return (
-          <div key={i} className={SearchOnNuguStyle.listContainer}>
-            <div className={SearchOnNuguStyle.title}>
-              {item}
-            </div>
-            <div>
-              {obj[item]}
-            </div>
+          <div key={i} className={SearchOnNuguStyle.listsContainer}>
+            {
+              Object.keys(obj).map((item, i) => {
+                return (
+                  <div key={i} className={SearchOnNuguStyle.listContainer}>
+                    <div className={SearchOnNuguStyle.title}>
+                      {item}
+                    </div>
+                    <div>
+                      {obj[item]}
+                    </div>
+                  </div>
+                )
+              })
+            }
           </div>
         )
       })
