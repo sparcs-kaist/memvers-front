@@ -21,7 +21,7 @@ export default class ChangePassword extends Component {
       try {
         const payload = await axios.post('https://memvers-api.sparcs.org/api/passwd', queryBody, {withCredentials: true})
         if (payload.data.expired) {
-          this.props.history.push('/')
+          window.location.href = '/login'
         } else if (payload.data.result) {
           alert('Update success')
         } else if (payload.data.weak) {

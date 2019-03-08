@@ -14,7 +14,7 @@ export default class Login extends Component {
   componentDidMount = async () => {
     try {
       const payload = await axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
-      if (!payload.data.expired) this.props.history.push('/menu')
+      if (!payload.data.expired) window.location.href = '/menu'
     } catch (error) {
       alert(error)
     }
@@ -48,7 +48,7 @@ export default class Login extends Component {
     try {
       const payload = await axios.post('https://memvers-api.sparcs.org/api/login', queryObject, {withCredentials: true})
       if (payload.data.result) {
-        this.props.history.push('/menu')
+        window.location.href = '/menu'
       } else {
         alert("Login failed")
       }

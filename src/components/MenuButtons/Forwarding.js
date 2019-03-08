@@ -13,7 +13,7 @@ export default class Forwarding extends Component {
     try {
       const payload = await axios.get('https://memvers-api.sparcs.org/api/forward', {withCredentials: true})
       if (payload.data.expired) {
-        this.props.history.push('/login')
+        window.location.href = '/login'
       } else this.setState({ mail: payload.data.mail })
     } catch (error) {
       alert(error)
@@ -24,7 +24,7 @@ export default class Forwarding extends Component {
     const { mail } = this.state;
     try {
       const payload = await axios.post('https://memvers-api.sparcs.org/api/forward', {mail: mail}, {withCredentials: true})
-      if (payload.data.expired) this.props.history.push('/')
+      if (payload.data.expired) window.location.href = '/login'
       else if (payload.data.result) {
         alert('Update success')
       } else {
