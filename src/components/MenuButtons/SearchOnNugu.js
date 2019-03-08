@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import { TextField, Button } from '@material-ui/core';
 import axios from 'axios';
+
+import { TextField, Button } from '@material-ui/core';
+
+import SearchOnNuguStyle from './SearchOnNugu.css'
 
 export default class SearchOnNugu extends Component {
   state = {
     querydata: '',
+    objs: null
   }
 
   handleChange = (e) => {
@@ -13,31 +17,55 @@ export default class SearchOnNugu extends Component {
     })
   }
 
-  // search = async (e) => {
-  //   const { querydata } = this.state
-  //   try {
-  //     const payload = await axios.post('https://memvers-api.sparcs.org/api/nugus', { name: querydata }, {withCredentials: true})
-  //     if (payload.data.expired) window.location.href = '/login'
-  //     else if (payload.data.result) {
-  //       let objs = payload.data.objs
-  //       if (objs) return objs.map(obj => <div>{obj}</div>)
-  //     }
-  //   } catch (err) {
-  //     alert(err)
-  //   }
-  // }
+  search = async (e) => {
+    const { querydata } = this.state
+    try {
+      const payload = await axios.post('https://memvers-api.sparcs.org/api/nugus', { name: querydata }, {withCredentials: true})
+      if (payload.data.expired) window.location.href = '/login'
+      else if (payload.data.result) {
+        console.log(payload.data.objs)
+        this.setState({ objs: payload.data.objs })
+      }
+    } catch (err) {
+      alert(err)
+    }
+  }
+
+  renderContent = () => {
+    const { objs } = this.state
+    if (objs) {
+      const obj = objs[0]
+      return Object.keys(obj).map((item, i) => {
+        return (
+          <div key={i} className={SearchOnNuguStyle.listContainer}>
+            <div className={SearchOnNuguStyle.title}>
+              {item}
+            </div>
+            <div>
+              {obj[item]}
+            </div>
+          </div>
+        )
+      })
+    } else {
+      return <div>
+        No result
+      </div>
+    }
+  }
 
   render() {
     return (
-      <div>
+      <div style={{width: '100%'}}>
         <TextField
           onChange={this.handleChange}
         />
-        {/* <Button
+        <Button
           onClick={() => this.search()}
         >
           검색
-        </Button> */}
+        </Button>
+        {this.renderContent()}
       </div>
     )
   }
