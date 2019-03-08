@@ -29,7 +29,7 @@ export default class Menu extends Component {
     try {
       let payload = await axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
       if (payload.data.expired) {
-        this.props.history.push('/login')
+        window.location.href = '/login'
       } else if (payload.data.un === 'wheel') {
         this.setState({ isWheel: true })
       }
@@ -59,7 +59,7 @@ export default class Menu extends Component {
   logout = () => {
     axios.get('https://memvers-api.sparcs.org/api/logout', {withCredentials: true})
       .then(
-        this.props.history.push('/login')
+        window.location.href = '/login'
       )
   }
 
