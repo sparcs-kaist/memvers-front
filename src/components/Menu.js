@@ -198,6 +198,9 @@ export default class Menu extends Component {
           )
         }
         <Button
+          variant="contained"
+          style={{ width: '100%', height: 45, boxShadow: "none", marginTop: 20, marginBottom: 50}}
+          color="secondary"
           onClick={() => this.checkLogout()}
         >
           로그아웃
@@ -216,7 +219,8 @@ export default class Menu extends Component {
               >
                 취소
               </Button>
-              <Button onClick={() => this.logout()}>
+              <Button
+                onClick={() => this.logout()}>
                 로그아웃
               </Button>
             </div>
