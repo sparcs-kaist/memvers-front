@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+import CircularProgress from '@material-ui/core/CircularProgress'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 
@@ -9,6 +10,7 @@ export default class Login extends Component {
   state = {
     username: '',
     userpw: '',
+    isLoading: false,
   }
 
   componentDidMount = async () => {
@@ -39,6 +41,7 @@ export default class Login extends Component {
   }
 
   login = async () => {
+    await this.setState({ isLoading: true })
     const { username, userpw } = this.state
     const queryObject = {
       un: username,
@@ -51,9 +54,11 @@ export default class Login extends Component {
         this.props.history.push('/menu')
       } else {
         alert("Login failed")
+        this.setState({ isLoading: false })
       }
     } catch (err) {
       alert(err)
+      this.setState({ isLoading: false })
     }
   }
 
@@ -81,10 +86,20 @@ export default class Login extends Component {
         <Button
           variant="contained"
           color="primary"
-          className={LoginStyle.button}
+          style={{width: '100%', boxShadow: 'none', backgroundColor: 'orange'}}
           onClick={() => this.login()}
         >
-          SPARCS 회원 인증
+          {
+            this.state.isLoading
+            ? (
+                <CircularProgress
+                  color="white"
+                  size={24}
+                />
+              ) : (
+                'SPARCS 회원 인증'
+            )
+          }
         </Button>
       </div>
     )
