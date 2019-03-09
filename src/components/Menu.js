@@ -32,7 +32,7 @@ export default class Menu extends Component {
     try {
       let payload = await axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
       if (payload.data.expired) {
-        window.location.href = '/login'
+        window.location.href = '/'
       } else if (payload.data.un === 'wheel') {
         this.setState({ isWheel: true })
       }
@@ -40,7 +40,7 @@ export default class Menu extends Component {
       const randomText = this.randomText()
       await this.setState({ user: payload.data.un, randomText, randomEmoji })
     } catch (err) {
-      alert(err)
+      // alert(err)
     }
   }
 
