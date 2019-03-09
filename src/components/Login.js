@@ -84,7 +84,7 @@ export default class Login extends Component {
           className={LoginStyle.button}
           onClick={() => this.login()}
         >
-          Login
+          SPARCS 회원 인증
         </Button>
       </div>
     )
