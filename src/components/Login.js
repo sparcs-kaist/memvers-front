@@ -48,7 +48,7 @@ export default class Login extends Component {
     try {
       const payload = await axios.post('https://memvers-api.sparcs.org/api/login', queryObject, {withCredentials: true})
       if (payload.data.result) {
-        window.location.href = '/menu'
+        this.props.history.push('/menu')
       } else {
         alert("Login failed")
       }
