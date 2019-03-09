@@ -59,12 +59,28 @@ export default class Login extends Component {
 
   render() {
     return (
-      <div onKeyPress={this.isEnter}>
+      <div className={LoginStyle.container} onKeyPress={this.isEnter}>
+        <div className={LoginStyle.title}>
+          로그인
+        </div>
         <div className={LoginStyle.inputField}>
-          <TextField label="username" onChange={(e) => this.onUsernameChange(e)}/>
-          <TextField type="password" label="password" onChange={(e) => this.onPasswordChange(e)}/>
+          <TextField
+            label="ID"
+            onChange={(e) => this.onUsernameChange(e)}
+            style={{marginBottom: 10, width: 300}}
+            variant="outlined"
+          />
+          <TextField
+            type="password"
+            label="Password"
+            onChange={(e) => this.onPasswordChange(e)}
+            style={{marginBottom: 10, width: 300}}
+            variant="outlined"
+          />
         </div>
         <Button
+          variant="contained"
+          color="primary"
           className={LoginStyle.button}
           onClick={() => this.login()}
         >
