@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios';
 
 import EditNuguStyle from './EditNugu.css'
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Checkbox } from '@material-ui/core';
 
+import { propertyName } from '../utils'
 export default class EditNugu extends Component {
   state = {
     obj: null,
@@ -27,6 +28,12 @@ export default class EditNugu extends Component {
     this.setState({ obj })
   }
 
+  toggleChange = (item) => {
+    const { obj } = this.state
+    obj[item] = obj[item] ? 0 : 1
+    this.setState({ obj })
+  }
+
   renderContent = () => {
     const { obj } = this.state
     if (obj) {
@@ -35,20 +42,33 @@ export default class EditNugu extends Component {
           return (
             <div key={i} className={EditNuguStyle.listContainer}>
               <div className={EditNuguStyle.title}>
-                {item}
+                {propertyName(item)}
               </div>
               <div className={EditNuguStyle.input}>
                 {obj[item]}
               </div>
             </div>
           )
+        } else if (item == 'is_developer' || item == 'is_designer' || item == 'is_undergraduate' || item == 'is_private') {
+          return (
+            <div key={i} className={EditNuguStyle.listContainer}>
+              <div className={EditNuguStyle.title}>
+                {propertyName(item)}
+              </div>
+              <Checkbox
+                checked={obj[item] ? true : false}
+                onChange={() => this.toggleChange(item)}
+              />
+            </div>
+          )
         } else {
           return (
             <div key={i} className={EditNuguStyle.listContainer}>
               <div className={EditNuguStyle.title}>
-                {item}
+                {propertyName(item)}
               </div>
               <TextField
+                placeholder="입력..."
                 className={EditNuguStyle.input}
                 value={obj[item]}
                 onChange={(e) => this.handleChange(e, item)}
