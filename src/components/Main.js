@@ -5,12 +5,15 @@ import Login from './Login'
 import Menu from './Menu'
 
 import MainStyle from './Main.css'
+import defaultStyle from './default.css'
 
 const Main = () => {
   return (
     <div className={MainStyle.mainContainer}>
-      <div className={MainStyle.header}>
-        Memvers <span>for SPARCS</span>
+      <div className={defaultStyle.header}>
+        <div style={{marginLeft: 10}}>
+          Memvers
+        </div>
       </div>
       <Switch>
         <Route path="/menu" component={Menu} />
