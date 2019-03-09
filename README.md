@@ -7,6 +7,8 @@ API 서버는 memvers.sparcs.org origin 만 허용합니다. 따라서 프론트
 1. /etc/hosts 에 127.0.0.1 memvers.sparcs.org 추가
 2. 작업은 항상 시크릿 탭 등, 캐시가 없는 브라우저로 진행
 
+dev 서버를 실행 후 브라우저에서 memvers.sparcs.org 로 접속하면, dev 서버로 연결됩니다.
+
 ## 배포 방법
 Ssal 컨테이너에 memvers 프론트 서버가 forever 프로세스로 떠있습니다.
 
