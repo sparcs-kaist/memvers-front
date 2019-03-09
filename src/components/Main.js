@@ -15,11 +15,13 @@ const Main = () => {
           Memvers
         </div>
       </div>
-      <Switch>
-        <Route path="/menu" component={Menu} />
-        <Route path="/login" component={Login} />
-        <Route path="/" render={props => <Redirect to="/login" />} />
-      </Switch>
+      <div style={{marginTop: 50}}>
+        <Switch>
+          <Route path="/menu" component={Menu} />
+          <Route path="/login" component={Login} />
+          <Route path="/" render={props => <Redirect to="/login" />} />
+        </Switch>
+      </div>
     </div>
   )
 }
