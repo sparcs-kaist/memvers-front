@@ -23,6 +23,9 @@ export default class Menu extends Component {
     isModalOpen: false,
     expanded: '',
     isWheel: false,
+    user: '',
+    randomText: '',
+    randomEmoji: '',
   }
 
   componentDidMount = async () => {
@@ -33,6 +36,9 @@ export default class Menu extends Component {
       } else if (payload.data.un === 'wheel') {
         this.setState({ isWheel: true })
       }
+      const randomEmoji = this.randomEmoji()
+      const randomText = this.randomText()
+      await this.setState({ user: payload.data.un, randomText, randomEmoji })
     } catch (err) {
       alert(err)
     }
@@ -61,6 +67,43 @@ export default class Menu extends Component {
       .then(
         window.location.href = '/login'
       )
+  }
+
+  randomEmoji = () => {
+    const randomEmoji = [
+      "( ´ ▽ ` )ﾉ",
+      "( ﾟ▽ﾟ)/",
+      "ᕕ( ᐛ )ᕗ",
+      "(◕‿◕✿)",
+      "╰(‘ω’ )╯",
+    ]
+    return randomEmoji[Math.floor(Math.random() * 3)]
+  }
+
+  randomText = () => {
+    const rendomText = [
+      "반가워요, ",
+      "안녕하세요, ",
+      "어서와요, ",
+    ]
+    return rendomText[Math.floor(Math.random() * 3)]
+  }
+
+  renderTitle = () => {
+    const { randomEmoji, randomText, user } = this.state
+    return (
+      <div className={MenuStyle.titleContainer}>
+        <div>
+          {randomEmoji}
+        </div>
+        <div className={MenuStyle.titleHello}>
+          {`${randomText}${user}!`}
+        </div>
+        <div className={MenuStyle.titleDescription}>
+          Memvers 는 SPARCS 회원들의 설정 관리 웹 사이트 입니다. 하단의 메뉴에서 원하는 항목을 수정 / 변경 할 수 있습니다.
+        </div>
+      </div>
+    )
   }
 
   renderMenus = () => {
@@ -116,6 +159,7 @@ export default class Menu extends Component {
   render() {
     return (
       <div className={MenuStyle.menuContainer}>
+        {this.renderTitle()}
         {this.renderMenus()}
         {
           this.state.isWheel
@@ -154,6 +198,9 @@ export default class Menu extends Component {
           )
         }
         <Button
+          variant="contained"
+          style={{ width: '100%', height: 45, boxShadow: "none", marginTop: 20, marginBottom: 50}}
+          color="secondary"
           onClick={() => this.checkLogout()}
         >
           로그아웃
@@ -172,7 +219,8 @@ export default class Menu extends Component {
               >
                 취소
               </Button>
-              <Button onClick={() => this.logout()}>
+              <Button
+                onClick={() => this.logout()}>
                 로그아웃
               </Button>
             </div>

@@ -1,4 +1,22 @@
-.button {
-  width: 100%;
-  background-color: blud;
+.container {
+  width: 300px;
+  height: 92vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
