@@ -20,4 +20,4 @@ const render = Component => {
 
 render(Main);
 
-if (module.hot) module.hot.accept('./components/Main', () => render(App));
+if (module.hot) module.hot.accept('./components/Main', () => render(Main));

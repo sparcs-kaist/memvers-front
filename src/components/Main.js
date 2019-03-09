@@ -11,7 +11,9 @@ const Main = () => {
   return (
     <div className={MainStyle.mainContainer}>
       <div className={defaultStyle.header}>
-        Memvers for SPARCS
+        <div style={{marginLeft: 10}}>
+          Memvers
+        </div>
       </div>
       <Switch>
         <Route path="/menu" component={Menu} />
