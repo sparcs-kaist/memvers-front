@@ -3,11 +3,13 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: left;
+  overflow: hidden;
 }
 
 .list-container {
   width: 100%;
   overflow: hidden;
+  margin-left: -10px;
 
   display: flex;
   flex-direction: row;
@@ -24,7 +26,7 @@
 .list-container .description {
   font-size: 0.9rem;
   overflow: hidden;
-  width: 55%;
+  width: 60%;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
