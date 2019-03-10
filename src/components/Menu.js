@@ -4,6 +4,7 @@ import axios from 'axios';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal'
 
@@ -134,7 +135,7 @@ export default class Menu extends Component {
           onChange = {() => this.handleChange(menu.name)}
           key={i}
         >
-          <ExpansionPanelSummary>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             {menu.name}
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
@@ -173,7 +174,7 @@ export default class Menu extends Component {
                   expanded={this.state.expanded == '회원 추가'}
                   onChange={() => this.handleChange('회원 추가')}
                 >
-                  <ExpansionPanelSummary>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                     회원 추가
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
@@ -184,7 +185,7 @@ export default class Menu extends Component {
                   expanded={this.state.expanded == '회원 삭제'}
                   onChange={() => this.handleChange('회원 삭제')}
                 >
-                  <ExpansionPanelSummary>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                     회원 삭제
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
