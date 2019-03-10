@@ -20,7 +20,7 @@ export default class EditNugu extends Component {
         this.setState({ obj: payload.data.obj })
       }
     } catch (err) {
-      alert(err)
+      console.log(err)
     }
   }
 

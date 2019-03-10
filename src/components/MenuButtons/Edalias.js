@@ -25,7 +25,7 @@ export default class Edalias extends Component {
         })
       }
     } catch (err) {
-      alert(err)
+      console.log(err)
     }
   }
 
