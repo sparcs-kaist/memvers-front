@@ -84,3 +84,26 @@
   width: 15px;
   margin-right: 5px;
 }
+
+.pdf-container {
+  width: 100%;
+  height: 35px;
+  color: white;
+  background-color: rgb(230,50,50);
+  border: 2px solid rgb(200,20,20);
+  border-radius: 5px;
+  margin-top: 10px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  transition: all 150ms ease-in-out;
+}
+
+.pdf-container:hover {
+  background-color: rgb(200, 50, 50);
+
+  transition: all 150ms ease-in-out;
+}

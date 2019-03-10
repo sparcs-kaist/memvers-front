@@ -103,6 +103,15 @@ export default class Menu extends Component {
         <div className={MenuStyle.titleDescription}>
           Memvers 는 SPARCS 회원들의 설정 관리 웹 사이트 입니다. 하단의 메뉴에서 원하는 항목을 수정 / 변경 할 수 있습니다.
         </div>
+        <img src={require('../images/exclamation-mark.png')} style={{width: 20, marginTop: 10}}/>
+        <div style={{fontSize: '0.9rem'}}>
+          <span style={{color: 'rgb(220,50,50)'}}>현재 메일 포워딩 기능이 정상적으로 동작하지 않습니다.</span> 메일링 리스트를 받아보기 위해서는, 하단의 PDF 설명을 따라 메일 클라이언트에서 설정해주어야 합니다.
+        </div>
+        <a href="https://drive.google.com/file/d/1Rcm1eEUI8y0-jSEgziQQboNcfUBz0wjp/view" alt="메일함 설정" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
+          <div className={MenuStyle.pdfContainer}>
+            메일 클라이언트 설정법
+          </div>
+        </a>
       </div>
     )
   }
@@ -130,6 +139,28 @@ export default class Menu extends Component {
     }
     ].map((menu, i) => {
       if (this.state.user == 'wheel' && menu.name == "Nugu 편집") return null
+      else if (menu.name == '메일 포워딩 설정') {
+        return (
+          <ExpansionPanel
+            disabled
+            expanded = {this.state.expanded == menu.name}
+            onChange = {() => this.handleChange(menu.name)}
+            key={i}
+          >
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <div style={{display: 'flex', flexDirection: 'column'}}>
+                {menu.name}
+                <span style={{fontSize: '0.8rem', color: 'red'}}>
+                  현재 동작하지 않습니다.
+                </span>
+              </div>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              {menu.component}
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        )
+      }
       else return (
         <ExpansionPanel
           expanded = {this.state.expanded == menu.name}
