@@ -18,7 +18,7 @@ export default class Edalias extends Component {
   componentDidMount = async () => {
     try {
       const payload = await axios.get('https://memvers-api.sparcs.org/api/edalias', {withCredentials: true})
-      if (payload.data.expired) window.location.href =('/login')
+      if (payload.data.expired) window.location.href = '/login'
       else {
         this.setState({
           ...payload.data
