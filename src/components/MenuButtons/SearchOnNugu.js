@@ -6,6 +6,8 @@ import { TextField, Button } from '@material-ui/core';
 import SearchOnNuguStyle from './SearchOnNugu.css'
 import { propertyName } from '../utils';
 
+import defaultStyle from './default.css'
+
 export default class SearchOnNugu extends Component {
   state = {
     querydata: '',
@@ -54,23 +56,38 @@ export default class SearchOnNugu extends Component {
         )
       })
     } else {
-      return <div>
+      return <div className={SearchOnNuguStyle.noResult}>
         No result
       </div>
+    }
+  }
+
+  isEnter = (e) => {
+    if (e.key == 'Enter') {
+      this.search();
     }
   }
 
   render() {
     return (
       <div style={{width: '100%'}}>
-        <TextField
-          onChange={this.handleChange}
-        />
-        <Button
-          onClick={() => this.search()}
-        >
-          검색
-        </Button>
+        <span className={defaultStyle.description}>
+          SPARCS 회원을 검색합니다. 아래의 정보는 각 회원들이 Nugu 에 직접 입력한 정보로 구성되어 있습니다. Enter 를 눌러 검색할 수 있습니다.
+        </span>
+        <div className={SearchOnNuguStyle.searchField} onKeyPress={this.isEnter}>
+          <TextField
+            placeholder="아이디 또는 이름 입력"
+            style={{width: '97%', marginRight: '3%'}}
+            onChange={this.handleChange}
+          />
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => this.search()}
+          >
+            검색
+          </Button>
+        </div>
         {this.renderContent()}
       </div>
     )

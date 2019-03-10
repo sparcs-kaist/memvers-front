@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button'
 import CListStyle from './CreateList.css'
 import axios from 'axios';
 
+import defaultStyle from './default.css'
+
 export default class CreateList extends Component {
   state = {
     name: '',
@@ -68,12 +70,13 @@ export default class CreateList extends Component {
 
   render() {
     return (
-      <div>
-        <div>
+      <div style={{width: '100%'}}>
+        <span className={defaultStyle.description}>
           메일링 리스트를 생성할 수 있습니다.
-        </div>
+        </span>
         <div className={CListStyle.inputField}>
           <TextField
+            style={{margin: '10px 0px'}}
             label="이름"
             onChange={(e) => this.handleChange(e, 'name')}
           />
@@ -82,6 +85,9 @@ export default class CreateList extends Component {
             onChange={(e) => this.handleChange(e, 'description')}
           />
           <Button
+            variant="contained"
+            color="primary"
+            style={{width: '100%', marginTop: 10, boxShadow: 'none'}}
             onClick={() => this.createList()}
           >
             생성
