@@ -4,6 +4,7 @@ import axios from 'axios';
 import { TextField, Button } from '@material-ui/core';
 
 import SearchOnNuguStyle from './SearchOnNugu.css'
+import { propertyName } from '../utils';
 
 export default class SearchOnNugu extends Component {
   state = {
@@ -40,7 +41,7 @@ export default class SearchOnNugu extends Component {
                 return (
                   <div key={i} className={SearchOnNuguStyle.listContainer}>
                     <div className={SearchOnNuguStyle.title}>
-                      {item}
+                      {propertyName(item)}
                     </div>
                     <div>
                       {obj[item]}
