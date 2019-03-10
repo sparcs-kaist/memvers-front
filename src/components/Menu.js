@@ -129,7 +129,8 @@ export default class Menu extends Component {
         component: <SearchOnNugu />
     }
     ].map((menu, i) => {
-      return (
+      if (this.state.user == 'wheel' && menu.name == "Nugu 편집") return null
+      else return (
         <ExpansionPanel
           expanded = {this.state.expanded == menu.name}
           onChange = {() => this.handleChange(menu.name)}
