@@ -208,6 +208,16 @@ export default class Menu extends Component {
           로그아웃
         </Button>
 
+        <div className={MenuStyle.credit}>
+          Memvers 2019, made by medowhill / leo
+        </div>
+        <a href="https://github.com/sparcs-kaist/memvers-front" style={{textDecoration: 'none'}} target="_blank" rel="noopener noreferrer">
+          <div className={MenuStyle.githubUrl}>
+            <img src={require('../images/github_icon.png')} alt="github icon" className={MenuStyle.icon}/>
+            Github · <span style={{color: 'gray'}}>memvers-front</span>
+          </div>
+        </a>
+
         <Modal
           open={this.state.isModalOpen}
           onClose={this.closeModal}
