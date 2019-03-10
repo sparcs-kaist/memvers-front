@@ -4,6 +4,8 @@ import axios from 'axios';
 import EdaliasStyle from './Edalias.css'
 import { Checkbox, Button } from '@material-ui/core';
 
+import defaultStyle from './default.css'
+
 export default class Edalias extends Component {
   state = {
     all: null,
@@ -89,8 +91,14 @@ export default class Edalias extends Component {
   render() {
     return (
       <div className={EdaliasStyle.edaContainer}>
+        <span className={defaultStyle.description}>
+          구독할 이메일 목록(메일링 리스트)을 설정할 수 있습니다. 해당하는 이름으로 전송되는 이메일을 받아봅니다.
+        </span>
         {this.renderContent()}
         <Button
+          variant="contained"
+          color="primary"
+          style={{marginTop: 10, boxShadow: 'none'}}
           onClick={this.save}
         >
           저장
