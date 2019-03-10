@@ -54,23 +54,35 @@ export default class SearchOnNugu extends Component {
         )
       })
     } else {
-      return <div>
+      return <div className={SearchOnNuguStyle.noResult}>
         No result
       </div>
+    }
+  }
+
+  isEnter = (e) => {
+    if (e.key == 'Enter') {
+      this.search();
     }
   }
 
   render() {
     return (
       <div style={{width: '100%'}}>
-        <TextField
-          onChange={this.handleChange}
-        />
-        <Button
-          onClick={() => this.search()}
-        >
-          검색
-        </Button>
+        <div className={SearchOnNuguStyle.searchField} onKeyPress={this.isEnter}>
+          <TextField
+            placeholder="아이디 또는 이름 입력"
+            style={{width: '97%', marginRight: '3%'}}
+            onChange={this.handleChange}
+          />
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => this.search()}
+          >
+            검색
+          </Button>
+        </div>
         {this.renderContent()}
       </div>
     )
