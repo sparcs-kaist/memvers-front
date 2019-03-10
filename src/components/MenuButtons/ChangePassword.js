@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import axios from 'axios';
 
+import defaultStyle from './default.css'
+
 export default class ChangePassword extends Component {
   state = {
     oldPassword: '',
@@ -56,7 +58,7 @@ export default class ChangePassword extends Component {
   render() {
     return (
       <div style={{width: '100%'}}>
-        <span style={{fontSize: '0.9rem', color: 'gray'}}>
+        <span className={defaultStyle.description}>
           비밀번호를 변경할 수 있습니다. 8자 이상의 비밀번호를 입력하세요.
         </span>
         <div style={{display: 'flex', flexDirection: 'column'}}>
