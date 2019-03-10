@@ -61,3 +61,25 @@
   color: rgb(150, 150, 150);
   font-size: 0.9rem;
 }
+
+.credit {
+  color: rgb(200,200,200);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.github-url {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: black;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  width: 15px;
+  margin-right: 5px;
+}
