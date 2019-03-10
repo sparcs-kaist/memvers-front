@@ -68,12 +68,13 @@ export default class CreateList extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{width: '100%'}}>
         <div>
           메일링 리스트를 생성할 수 있습니다.
         </div>
         <div className={CListStyle.inputField}>
           <TextField
+            style={{margin: '10px 0px'}}
             label="이름"
             onChange={(e) => this.handleChange(e, 'name')}
           />
@@ -82,6 +83,9 @@ export default class CreateList extends Component {
             onChange={(e) => this.handleChange(e, 'description')}
           />
           <Button
+            variant="contained"
+            color="primary"
+            style={{width: '100%', marginTop: 10, boxShadow: 'none'}}
             onClick={() => this.createList()}
           >
             생성
