@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.dev.js",
     "prebuild": "rimraf dist",
-    "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.prod.js"
+    "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.prod.js",
+    "deploy": "aws s3 sync ./dist s3://memvers-front --profile=leo"
   },
   "dependencies": {
     "@babel/core": "^7.3.4",
