@@ -10,12 +10,9 @@ API 서버는 memvers.sparcs.org origin 만 허용합니다. 따라서 프론트
 dev 서버를 실행 후 브라우저에서 memvers.sparcs.org 로 접속하면, dev 서버로 연결됩니다. 단, dev 서버에서는 ssl 을 사용하지 않으므로 https 가 아닌 http 로 접속해야 합니다. 그렇지 않을 경우 '보안 연결을 사용할 수 없음' 이라는 오류메세지를 보게 됩니다.
 
 ## 배포 방법
-Ssal 컨테이너에 memvers 프론트 서버가 forever 프로세스로 떠있습니다. 해당 컨테이너는 Whale 에서도 확인 가능합니다.
+Memvers 는 AWS S3 를 이용해 호스팅 됩니다. SSL을 위해 AWS Cloudfront 를 사용하고 있습니다. 배포 작업은 3단계로 이루어집니다.
+1. npm run build : 해당 커맨드는 dist 폴더에 번들링 된 파일을 생성해 줍니다.
+2. npm deploy : 해당 커맨드는 AWS S3 스토리지에 dist 폴더의 파일을 전송해 줍니다.
+3. Cloudfront Purge : 이는 직접 AWS console 에 접근하여, CDN 서버의 캐시를 비워야 합니다.
 
-1. memvers-front 컨테이너 접속
-2. /memvers-front dir 로 이동
-3. git pull
-4. npm run build
-5. forever restart server/main.js
-
-배포 방법은 추후 Jenkins 를 사용하여 자동화할 예정입니다.
+배포 과정은 단축시킬 예정입니다.
