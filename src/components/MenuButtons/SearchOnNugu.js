@@ -12,6 +12,11 @@ export default class SearchOnNugu extends Component {
   state = {
     querydata: '',
     objs: null,
+    noresult: false,
+  }
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return (this.state.objs != nextState.objs) || (this.state.noresult != nextState.noresult)
   }
 
   handleChange = (e) => {
@@ -24,12 +29,23 @@ export default class SearchOnNugu extends Component {
     const { querydata } = this.state
     try {
       const payload = await axios.post('https://memvers-api.sparcs.org/api/nugus', { name: querydata }, {withCredentials: true})
-      if (payload.data.expired) window.location.href = '/login'
-      else if (payload.data.result) this.setState({ objs: payload.data.objs })
-      else if (!payload.data.result) {
+      if (payload.data.expired) {
+        window.location.href = '/login'
+      } else if (payload.data.objs) {
+        this.setState({ objs: payload.data.objs })
+      } else if (!payload.data.objs) {
+        this.setState({
+          noresult: false,
+        })
         this.setState({
           objs: null,
+          noresult: true,
         })
+        setTimeout(() => {
+          this.setState({
+            noresult: false,
+          })
+        }, 1500)
       }
     } catch (err) {
       alert(err)
@@ -66,8 +82,17 @@ export default class SearchOnNugu extends Component {
         )
       })
     } else {
+      const { querydata } = this.state
       return <div className={SearchOnNuguStyle.noResult}>
-        No result
+        {
+          this.state.noresult ? (
+            `No user with name "${querydata}"`
+          ) : (
+            <div className={SearchOnNuguStyle.waiting}>
+              : )
+            </div>
+          )
+        }
       </div>
     }
   }
