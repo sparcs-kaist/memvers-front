@@ -25,7 +25,11 @@ export default class ChangePassword extends Component {
         if (payload.data.expired) {
           window.location.href = '/login'
         } else if (payload.data.result) {
-          alert('Update success')
+          alert('Update success. Please login again.')
+          axios.get('https://memvers-api.sparcs.org/api/logout', {withCredentials: true})
+          .then(
+            window.location.href = '/login'
+          )
         } else if (payload.data.weak) {
           alert('Too weak')
         } else {

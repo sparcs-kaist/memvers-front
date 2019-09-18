@@ -4,7 +4,7 @@
 
 .list-container {
   width: 100%;
-  margin-bottom: 10px;
+  margin: 10px 0;
 
   display: flex;
   flex-direction: row;
@@ -14,6 +14,15 @@
 
 .list-container .title {
   width: 30%;
+  color: gray;
+  font-size: 14px;
+
+  text-align: right;
+  padding-right: 20px;
+}
+
+.list-container .nodata {
+  color: lightgray;
 }
 
 .search-field {

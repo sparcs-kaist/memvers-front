@@ -122,19 +122,19 @@ export default class Menu extends Component {
         name: "비밀번호 변경",
         component: <ChangePassword />
       },{
-        name: "메일링 리스트 생성",
+        name: "세 메일링 리스트 생성",
         component: <CreateList />
       },{
         name: "메일 포워딩 설정",
         component: <Forwarding />
       },{
-        name: "Alias 편집",
+        name: "메일링 리스트 설정",
         component: <Edalias />
       },{
-        name: "Nugu 편집",
+        name: "나의 Nugu 정보",
         component: <EditNugu />
       },{
-        name: "Nugu 검색",
+        name: "Nugu 에서 검색하기",
         component: <SearchOnNugu />
     }
     ].map((menu, i) => {
@@ -230,6 +230,31 @@ export default class Menu extends Component {
             null
           )
         }
+
+        <div>
+          <div className={MenuStyle.informationLabel}>
+            기능 설명
+          </div>
+          <div className={MenuStyle.information}>
+            <div className={MenuStyle.informationHeader}>
+              메일링 리스트
+            </div>
+            <div className={MenuStyle.informationBody}>
+              sparcs.org 메일 서버로 전달되는 메일링 리스트를 관리합니다. 내가 받아볼 메일링 리스트를 체크하거나, 새로운 메일링 리스트를 생성할 수 있습니다. 예를 들어, sparcsunder 에 체크해두는 것은 sparcsunder@sparcs.org 로 수신되는 메일을 받겠다는 표시입니다.
+            </div>
+          </div>
+          <div className={MenuStyle.information}>
+            <div className={MenuStyle.informationHeader}>
+              Nugu
+            </div>
+            <div className={MenuStyle.informationBody}>
+              Nugu 는 SPARCS 내부의 회원 데이터베이스 관리 서비스입니다. 타 회원의 정보를 검색할 수 있으며 나의 정보를 등록해 제공할 수도 있습니다. 나의 Nugu 정보 메뉴에서 내 정보를 수정할 수 있습니다. 비공개 설정은 SPARCS 공식 홈페이지에서 로그인하지 않은 외부 사용자에게 자신의 정보를 공개할 것인지 여부를 의미합니다.
+            </div>
+          </div>
+          <div className={MenuStyle.warningText}>
+            회원의 추가 및 삭제는 wheel 권한이 요구됩니다. 일반 회원은 자신을 삭제하거나 다른 사람을 추가할 수 없습니다.
+          </div>
+        </div>
         <Button
           variant="contained"
           style={{ width: '100%', height: 45, boxShadow: "none", marginTop: 20, marginBottom: 50}}

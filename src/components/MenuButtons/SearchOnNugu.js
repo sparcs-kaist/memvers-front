@@ -11,7 +11,7 @@ import defaultStyle from './default.css'
 export default class SearchOnNugu extends Component {
   state = {
     querydata: '',
-    objs: null
+    objs: null,
   }
 
   handleChange = (e) => {
@@ -26,7 +26,11 @@ export default class SearchOnNugu extends Component {
       const payload = await axios.post('https://memvers-api.sparcs.org/api/nugus', { name: querydata }, {withCredentials: true})
       if (payload.data.expired) window.location.href = '/login'
       else if (payload.data.result) this.setState({ objs: payload.data.objs })
-      else if (!payload.data.result) this.setState({ objs: null }) 
+      else if (!payload.data.result) {
+        this.setState({
+          objs: null,
+        })
+      }
     } catch (err) {
       alert(err)
     }
@@ -46,7 +50,13 @@ export default class SearchOnNugu extends Component {
                       {propertyName(item)}
                     </div>
                     <div>
-                      {obj[item]}
+                      {obj[item] == "" || obj[item] == null ? (
+                        <div className={SearchOnNuguStyle.nodata}>
+                          -
+                        </div>
+                      ) : (
+                        obj[item]
+                      )}
                     </div>
                   </div>
                 )

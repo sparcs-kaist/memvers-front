@@ -107,3 +107,29 @@
 
   transition: all 150ms ease-in-out;
 }
+
+.information {
+  margin-top: 1rem;
+}
+
+.information-label {
+  font-size: 13px;
+  margin-top: 2rem;
+  font-weight: bold;
+}
+
+.information-header {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.information-body {
+  font-size: 13px;
+  color: gray;
+}
+
+.warning-text {
+  margin: 1rem 0;
+  font-size: 13px;
+  color: red;
+}
