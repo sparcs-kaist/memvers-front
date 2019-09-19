@@ -86,6 +86,9 @@ export default class Menu extends Component {
       "반가워요, ",
       "안녕하세요, ",
       "어서와요, ",
+      "기다렸어요, ",
+      "잘 왔어요, ",
+      "반갑네요, ",
     ]
     return rendomText[Math.floor(Math.random() * 3)]
   }
@@ -138,7 +141,7 @@ export default class Menu extends Component {
         component: <SearchOnNugu />
     }
     ].map((menu, i) => {
-      if (this.state.user == 'wheel' && menu.name == "Nugu 편집") return null
+      if (this.state.user == 'wheel' && menu.name == "나의 Nugu 정보") return null
       else if (menu.name == '메일 포워딩 설정') {
         return (
           <ExpansionPanel

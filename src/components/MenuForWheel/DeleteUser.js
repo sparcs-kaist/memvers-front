@@ -22,7 +22,13 @@ export default class DeleteUser extends Component {
       try {
         const payload = await axios.post('https://memvers-api.sparcs.org/api/wheel/delete', {un: userName}, {withCredentials: true})
         if (payload.data.expired) window.location.href = '/login'
-        else if (payload.data.result) alert('Delete success.')
+        else if (payload.data.result) {
+          alert('Delete success.')
+          this.setState({
+            userInput: '',
+            userName: '',
+          })
+        }
         else alert('No such user')
       } catch (error) {
         alert(error)
@@ -43,6 +49,7 @@ export default class DeleteUser extends Component {
             style={{width: '100%', marginTop: 10}}
             label="ID"
             onChange={(e) => this.handleChange(e, 'name')}
+            value={this.state.userName}
           />
           <div style={{margin: '20px 0px', color: 'red'}}>
             정말 삭제할까요? 삭제를 원할 경우, 아래 문구를 입력하세요.
@@ -52,6 +59,7 @@ export default class DeleteUser extends Component {
             style={{width: '100%', marginTop: 10}}
             label="삭제하겠습니다."
             onChange={(e) => this.handleChange(e, 'verify')}
+            value={this.state.userInput}
           />
         </div>
         <Button

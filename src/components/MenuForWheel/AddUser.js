@@ -48,8 +48,15 @@ export default class AddUser extends Component {
     try {
       const payload = await axios.post('https://memvers-api.sparcs.org/api/wheel/add', queryBody, {withCredentials: true})
       if (payload.data.expired) window.location.href = '/login'
-      else if (payload.data.result) alert('Add success')
-      else if (payload.data.weak) alert('Weak password')
+      else if (payload.data.result) {
+        alert('Add success')
+        this.setState({
+          id: '',
+          name: '',
+          password: '',
+          cpassword: '',
+        })
+      } else if (payload.data.weak) alert('Weak password')
       else alert('The user already exist')
     } catch (error) {
       alert(error)
@@ -66,23 +73,27 @@ export default class AddUser extends Component {
           style={{width: '100%', marginTop: 10}}
           label="ID"
           onChange={(e) => this.handleChange(e, 'id')}
+          value={this.state.id}
         />
         <TextField
           style={{width: '100%', marginTop: 10}}
           label="이름"
           onChange={(e) => this.handleChange(e, 'name')}
+          value={this.state.name}
         />
         <TextField
           style={{width: '100%', marginTop: 10}}
           label="비밀번호"
           onChange={(e) => this.handleChange(e, 'password')}
           type="password"
+          value={this.state.password}
         />
         <TextField
           style={{width: '100%', marginTop: 10}}
           label="비밀번호 확인"
           onChange={(e) => this.handleChange(e, 'cpassword')}
           type="password"
+          value={this.state.cpassword}
         />
         <Button
           variant="contained"
