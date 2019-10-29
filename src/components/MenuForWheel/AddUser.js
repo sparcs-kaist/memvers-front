@@ -56,7 +56,7 @@ export default class AddUser extends Component {
           password: '',
           cpassword: '',
         })
-      } else if (payload.data.weak) alert('Weak password')
+      } else if (payload.data.weak) alert('Weak password (length >= 8, Password cannot include username)')
       else alert('The user already exist')
     } catch (error) {
       alert(error)

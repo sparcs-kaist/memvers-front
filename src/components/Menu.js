@@ -18,6 +18,7 @@ import MenuStyle from './Menu.css'
 import EditNugu from './MenuButtons/EditNugu';
 import AddUser from './MenuForWheel/AddUser';
 import DeleteUser from './MenuForWheel/DeleteUser';
+import WheelChangePassword from './MenuForWheel/ChangePassword';
 
 export default class Menu extends Component {
   state = {
@@ -205,6 +206,17 @@ export default class Menu extends Component {
                   Wheel 전용 메뉴
               </div>
               <div>
+                <ExpansionPanel
+                  expanded={this.state.expanded == '회원 비밀번호 변경'}
+                  onChange={() => this.handleChange('회원 비밀번호 변경')}
+                >
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    회원 비밀번호 변경
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <WheelChangePassword />
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
                 <ExpansionPanel
                   expanded={this.state.expanded == '회원 추가'}
                   onChange={() => this.handleChange('회원 추가')}
