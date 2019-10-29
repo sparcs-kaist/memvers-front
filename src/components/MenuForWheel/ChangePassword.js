@@ -71,17 +71,20 @@ export default class ChangePassword extends Component {
             label="ID"
             onChange={(e) => this.handleChange(e, 'id')}
             style={{margin: '10px 0px'}}
+            value={this.state.id}
           />
           <TextField
             label="새 비밀번호"
             type="password"
             onChange={(e) => this.handleChange(e, 'new')}
             style={{marginBottom: 10}}
+            value={this.state.newPassword}
           />
           <TextField
             label="새 비밀번호 재입력"
             type="password"
             onChange={(e) => this.handleChange(e, 'confirm')}
+            value={this.state.confirmPassword}
           />
         </div>
         <Button
