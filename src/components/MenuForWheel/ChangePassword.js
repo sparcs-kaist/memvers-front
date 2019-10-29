@@ -14,7 +14,7 @@ export default class ChangePassword extends Component {
   }
 
   changePassword = async () => {
-    const { oldPassword, newPassword, confirmPassword } = this.state
+    const { id, newPassword, confirmPassword } = this.state
     if (newPassword == confirmPassword) {
       const queryBody = {
         un: id,
