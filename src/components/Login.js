@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { loginApi } from '../api'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
 import TextField from '@material-ui/core/TextField'
@@ -15,8 +15,8 @@ export default class Login extends Component {
 
   componentDidMount = async () => {
     try {
-      const payload = await axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
-      if (!payload.data.expired) window.location.href = '/menu'
+      const { status } = await loginApi.get('/un')
+      if (status === 200) window.location.href = '/menu'
     } catch (error) {
       alert(error)
     }
@@ -49,13 +49,14 @@ export default class Login extends Component {
     }
 
     try {
-      const payload = await axios.post('https://memvers-api.sparcs.org/api/login', queryObject, {withCredentials: true})
-      if (payload.data.result) {
+      const { data } = await loginApi.post('/login', queryObject)
+      if (data.success) {
         this.props.history.push('/menu')
-      } else {
-        alert("Login failed")
-        this.setState({ isLoading: false })
+        return;
       }
+
+      alert("Login failed")
+      this.setState({ isLoading: false })
     } catch (err) {
       alert(err)
       this.setState({ isLoading: false })

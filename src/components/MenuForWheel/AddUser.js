@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { TextField, Button } from '@material-ui/core';
 
 import AddUserStyle from './AddUser.css'
-import axios from 'axios';
 
+import api from '../../api'
 import defaultStyle from '../MenuButtons/default.css'
 
 export default class AddUser extends Component {
@@ -36,19 +36,21 @@ export default class AddUser extends Component {
 
   add = async () => {
     const { id, name, password, cpassword } = this.state
-    if (password != cpassword) {
+    if (password !== cpassword) {
       alert('Not equal password')
       return
     }
+
     const queryBody = {
-      un: id,
       name,
       npass: password
     }
+
     try {
-      const payload = await axios.post('https://memvers-api.sparcs.org/api/wheel/add', queryBody, {withCredentials: true})
-      if (payload.data.expired) window.location.href = '/login'
-      else if (payload.data.result) {
+      const { data, notLoggedIn } = await api.put(`/account/${id}`, queryBody)
+      if (notLoggedIn) return
+
+      if (data.success) {
         alert('Add success')
         this.setState({
           id: '',
@@ -56,8 +58,25 @@ export default class AddUser extends Component {
           password: '',
           cpassword: '',
         })
-      } else if (payload.data.weak) alert('Weak password (length >= 8, Password cannot include username)')
-      else alert('The user already exist')
+        return
+      }
+
+      switch (data.error) {
+        case 0:
+          alert('The user already exist')
+          return
+
+        case 1:
+          alert('Weak password (length >= 8, Password cannot include username)')
+          return
+
+        case 2:
+          alert('Some field is not given')
+          return
+
+        default:
+          throw new Error(`Unknown Error: ${JSON.stringify(data)}`)
+      }
     } catch (error) {
       alert(error)
     }

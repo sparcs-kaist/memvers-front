@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import axios from 'axios';
 
+import api from '../../api'
 import defaultStyle from './default.css'
 
 export default class ChangePassword extends Component {
@@ -15,31 +15,40 @@ export default class ChangePassword extends Component {
 
   changePassword = async () => {
     const { oldPassword, newPassword, confirmPassword } = this.state
-    if (newPassword == confirmPassword) {
-      const queryBody = {
-        opass: oldPassword,
-        npass: newPassword
+    if (newPassword !== confirmPassword) {
+      alert('Password does not match.')
+      return
+    }
+    
+    const queryBody = {
+      opass: oldPassword,
+      npass: newPassword
+    }
+    try {
+      const { notLoggedIn, data } = await api.post('/passwd', queryBody)
+      if (notLoggedIn) return
+      
+      if (data.success) {
+        alert('Update success. Please login again.')
+        api.post('/logout').then(() => window.location.href = '/login')
+        return
       }
-      try {
-        const payload = await axios.post('https://memvers-api.sparcs.org/api/passwd', queryBody, {withCredentials: true})
-        if (payload.data.expired) {
-          window.location.href = '/login'
-        } else if (payload.data.result) {
-          alert('Update success. Please login again.')
-          axios.get('https://memvers-api.sparcs.org/api/logout', {withCredentials: true})
-          .then(
-            window.location.href = '/login'
-          )
-        } else if (payload.data.weak) {
-          alert('Too weak')
-        } else {
+      
+      
+      switch (data.error) {
+        case 0:
           alert('Wrong password')
-        }
-      } catch (err) {
-        alert(err)
+          return
+        
+        case 1:
+          alert('Too weak password')
+          return
+        
+        default:
+          throw new Error(`Unknown Error: ${JSON.stringify(data)}`)
       }
-    } else {
-      alert("Password does not match.")
+    } catch (err) {
+      alert(err)
     }
   }
 
