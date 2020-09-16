@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import api from '../api'
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel'
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Button } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { Button } from '@material-ui/core'
 import Modal from '@material-ui/core/Modal'
 
 import ChangePassword from './MenuButtons/ChangePassword'
@@ -15,10 +15,10 @@ import Edalias from './MenuButtons/Edalias'
 import SearchOnNugu from './MenuButtons/SearchOnNugu'
 
 import MenuStyle from './Menu.css'
-import EditNugu from './MenuButtons/EditNugu';
-import AddUser from './MenuForWheel/AddUser';
-import DeleteUser from './MenuForWheel/DeleteUser';
-import WheelChangePassword from './MenuForWheel/ChangePassword';
+import EditNugu from './MenuButtons/EditNugu'
+import AddUser from './MenuForWheel/AddUser'
+import DeleteUser from './MenuForWheel/DeleteUser'
+import WheelChangePassword from './MenuForWheel/ChangePassword'
 
 export default class Menu extends Component {
   state = {
@@ -32,15 +32,16 @@ export default class Menu extends Component {
 
   componentDidMount = async () => {
     try {
-      let payload = await axios.get('https://memvers-api.sparcs.org/api/un', {withCredentials: true})
-      if (payload.data.expired) {
-        window.location.href = '/'
-      } else if (payload.data.un === 'wheel') {
+      let { notLoggedIn, data } = await api.get('/un')
+      if (notLoggedIn) return
+      
+      if (data.un === 'wheel') {
         this.setState({ isWheel: true })
       }
+      
       const randomEmoji = this.randomEmoji()
       const randomText = this.randomText()
-      await this.setState({ user: payload.data.un, randomText, randomEmoji })
+      await this.setState({ user: data.un, randomText, randomEmoji })
     } catch (err) {
       // alert(err)
     }
@@ -65,10 +66,8 @@ export default class Menu extends Component {
   }
 
   logout = () => {
-    axios.get('https://memvers-api.sparcs.org/api/logout', {withCredentials: true})
-      .then(
-        window.location.href = '/login'
-      )
+    api.post('/logout')
+      .then(() => window.location.href = '/login')
   }
 
   randomEmoji = () => {

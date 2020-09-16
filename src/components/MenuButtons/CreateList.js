@@ -4,8 +4,8 @@ import { TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 
 import CListStyle from './CreateList.css'
-import axios from 'axios';
 
+import api from '../../api'
 import defaultStyle from './default.css'
 
 export default class CreateList extends Component {
@@ -51,35 +51,38 @@ export default class CreateList extends Component {
       desc: description
     }
 
-    if (this.acceptable(name)) {
-      try {
-        const { data, notLoggedIn } = await axios.put(`/mailing/${name}`, queryBody)
-        if (notLoggedIn) return
+    if (!this.acceptable(name)) {
+      alert('Cannot use this name!')
+      return
+    }
+    
+    try {
+      const { data, notLoggedIn } = await api.put(`/mailing/${name}`, queryBody)
+      if (notLoggedIn) return
 
-        if (data.success) {
-          alert('Succesfully created')
-          return
-        }
-
-        switch (data.error) {
-          case 0:
-            alert('The mailing list already exists!')
-            return
-
-          case 1:
-            alert('Internal Server Error')
-            return
-
-          case 2:
-            alert('Description is not given')
-            return
-
-          default:
-            throw new Error(`Unknown error: ${JSON.stringify(data)}`)
-        }
-      } catch (err) {
-        alert(err)
+      if (data.success) {
+        alert('Succesfully created')
+        return
       }
+
+      switch (data.error) {
+        case 0:
+          alert('The mailing list already exists!')
+          return
+
+        case 1:
+          alert('Internal Server Error')
+          return
+
+        case 2:
+          alert('Description is not given')
+          return
+
+        default:
+          throw new Error(`Unknown error: ${JSON.stringify(data)}`)
+      }
+    } catch (err) {
+      alert(err)
     }
   }
 

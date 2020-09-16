@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
 import EditNuguStyle from './EditNugu.css'
-import { TextField, Button, Checkbox } from '@material-ui/core';
+import { TextField, Button, Checkbox } from '@material-ui/core'
 
-import api from '../api'
+import api from '../../api'
 import defaultStyle from './default.css'
 
 import { propertyName } from '../utils'
@@ -89,11 +89,12 @@ export default class EditNugu extends Component {
   save = async () => {
     const { obj } = this.state
     try {
-      const { notLoggedIn, data } = await axios.post('/nugu', { nobj: obj })
+      const { notLoggedIn, data } = await api.post('/nugu', { nobj: obj })
       if (notLoggedIn) return
 
       if (data.success) {
         alert('Update success.')
+        return
       }
 
       throw new Error(`Unknown Error: ${JSON.stringify(data)}`)

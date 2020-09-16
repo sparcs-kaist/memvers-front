@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
 import EdaliasStyle from './Edalias.css'
-import { Checkbox, Button } from '@material-ui/core';
+import { Checkbox, Button } from '@material-ui/core'
 
-import api from '../api'
+import api from '../../api'
 import defaultStyle from './default.css'
 
 export default class Edalias extends Component {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 
-import { TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 
+import api from '../../api'
 import defaultStyle from './default.css'
 
 export default class Forwarding extends Component {
@@ -13,7 +13,7 @@ export default class Forwarding extends Component {
 
   componentDidMount = async () => {
     try {
-      const { notLoggedIn, data } = await axios.get('/forward')
+      const { notLoggedIn, data } = await api.get('/forward')
       if (notLoggedIn) return
 
       const { mail } = data
@@ -26,7 +26,7 @@ export default class Forwarding extends Component {
   save = async () => {
     const { mail } = this.state;
     try {
-      const { notLoggedIn, data } = await axios.post('/forward', { mail })
+      const { notLoggedIn, data } = await api.post('/forward', { mail })
       if (notLoggedIn) return
 
       if (data.success) {

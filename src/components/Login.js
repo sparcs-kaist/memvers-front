@@ -49,8 +49,8 @@ export default class Login extends Component {
     }
 
     try {
-      const { success } = await loginApi.post('/login', queryObject)
-      if (success) {
+      const { data } = await loginApi.post('/login', queryObject)
+      if (data.success) {
         this.props.history.push('/menu')
         return;
       }

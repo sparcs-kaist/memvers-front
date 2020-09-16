@@ -24,7 +24,7 @@ export default class DeleteUser extends Component {
     }
 
     try {
-      const { data, notLoggedIn } = await api.delete(`/account/${userName}/delete`)
+      const { data, notLoggedIn } = await api.delete(`/account/${userName}`)
       if (notLoggedIn) return
 
       if (data.success) {

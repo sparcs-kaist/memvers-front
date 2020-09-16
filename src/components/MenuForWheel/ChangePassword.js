@@ -15,14 +15,14 @@ export default class ChangePassword extends Component {
 
   changePassword = async () => {
     const { id, newPassword, confirmPassword } = this.state
-    if (newPassword == confirmPassword) {
+    if (newPassword !== confirmPassword) {
       alert('Password does not match.')
       return
     }
     const queryBody = { npass: newPassword }
 
     try {
-      const { data, notLoggedIn } = await api.post(`/passwd/admin/${id}`)
+      const { data, notLoggedIn } = await api.post(`/passwd/admin/${id}`, queryBody)
       if (notLoggedIn) return
 
       if (data.success) {
@@ -32,15 +32,16 @@ export default class ChangePassword extends Component {
           newPassword: '',
           confirmPassword: '',
         })
+        return
       }
 
       switch (data.error) {
         case 0:
-          alert('Too weak (length >= 8, Password cannot include username)')
+          alert('User doesn\'t exist')
           return
 
         case 1:
-          alert('User doesn\'t exist')
+          alert('Password Too weak (length >= 8, Password cannot include username)')
           return
 
         default:

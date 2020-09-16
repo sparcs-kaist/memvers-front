@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core'
 
 import SearchOnNuguStyle from './SearchOnNugu.css'
-import { propertyName } from '../utils';
+import { propertyName } from '../utils'
 
+import api from '../../api'
 import defaultStyle from './default.css'
 
 export default class SearchOnNugu extends Component {
@@ -28,10 +28,10 @@ export default class SearchOnNugu extends Component {
   search = async (e) => {
     const { querydata } = this.state
     try {
-      const { notLoggedIn, data } = await axios.get(`/nugu/${querydata}`)
+      const { notLoggedIn, data } = await api.get(`/nugu/${querydata}`)
       if (notLoggedIn) return
 
-      if (data.objs) {
+      if (data.objs && data.objs.length > 0) {
         this.setState({ objs: data.objs })
         return
       }

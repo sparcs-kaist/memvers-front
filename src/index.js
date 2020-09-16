@@ -9,7 +9,7 @@ import 'babel-polyfill'
 import Main from './components/Main'
 
 // Initialize CSRF cookie
-api.get('/', { validateStatus: false })
+loginApi.get('/')
   .then(({ data, status }) => {
     if (status !== 418) {
       return Promise.reject(

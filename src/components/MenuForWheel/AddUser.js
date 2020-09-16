@@ -36,7 +36,7 @@ export default class AddUser extends Component {
 
   add = async () => {
     const { id, name, password, cpassword } = this.state
-    if (password != cpassword) {
+    if (password !== cpassword) {
       alert('Not equal password')
       return
     }
@@ -63,7 +63,7 @@ export default class AddUser extends Component {
 
       switch (data.error) {
         case 0:
-          alert(' The user already exist')
+          alert('The user already exist')
           return
 
         case 1:

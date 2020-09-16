@@ -27,4 +27,7 @@ api.interceptors
   )
 
 export default api
-export const loginApi = axios.create(config)
+export const loginApi = axios.create({
+  validateStatus: false,
+  ...config
+})
