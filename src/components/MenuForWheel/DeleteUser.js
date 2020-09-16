@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { TextField, Button } from '@material-ui/core';
-import axios from 'axios';
 
+import api from '../../api'
 import defaultStyle from '../MenuButtons/default.css'
 
 export default class DeleteUser extends Component {
@@ -18,23 +18,28 @@ export default class DeleteUser extends Component {
 
   delete = async () => {
     const { verifyText, userInput, userName } = this.state
-    if (verifyText == userInput) {
-      try {
-        const payload = await axios.post('https://memvers-api.sparcs.org/api/wheel/delete', {un: userName}, {withCredentials: true})
-        if (payload.data.expired) window.location.href = '/login'
-        else if (payload.data.result) {
-          alert('Delete success.')
-          this.setState({
-            userInput: '',
-            userName: '',
-          })
-        }
-        else alert('No such user')
-      } catch (error) {
-        alert(error)
-      }
-    } else {
+    if (verifyText !== userInput) {
       alert('Text does not match.')
+      return
+    }
+
+    try {
+      const { data, notLoggedIn } = await api.delete(`/account/${userName}/delete`)
+      if (notLoggedIn) return
+
+      if (data.success) {
+        alert('Delete success.')
+        this.setState({
+          userInput: '',
+          userName: '',
+        })
+
+        return
+      }
+
+      alert('No such user')
+    } catch (error) {
+      alert(error)
     }
   }
 
@@ -45,7 +50,7 @@ export default class DeleteUser extends Component {
           회원 정보를 삭제합니다. <span style={{color: 'red'}}>이 작업은 취소할 수 없습니다.</span>
         </span>
         <div style={{width: '100%'}}>
-          <TextField 
+          <TextField
             style={{width: '100%', marginTop: 10}}
             label="ID"
             onChange={(e) => this.handleChange(e, 'name')}

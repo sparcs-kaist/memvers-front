@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 
 import EdaliasStyle from './Edalias.css'
 import { Checkbox, Button } from '@material-ui/core';
 
+import api from '../api'
 import defaultStyle from './default.css'
 
 export default class Edalias extends Component {
@@ -17,13 +17,13 @@ export default class Edalias extends Component {
 
   componentDidMount = async () => {
     try {
-      const payload = await axios.get('https://memvers-api.sparcs.org/api/edalias', {withCredentials: true})
-      if (payload.data.expired) window.location.href = '/login'
-      else {
-        this.setState({
-          ...payload.data
-        })
-      }
+      const { notLoggedIn, data } = await api.get('/mailing')
+      if (notLoggedIn) return
+
+      const { all, info, aliases } = data
+      this.setState({
+        all, info, aliases
+      })
     } catch (err) {
       console.log(err)
     }
@@ -32,9 +32,13 @@ export default class Edalias extends Component {
   save = async () => {
     const { added, removed } = this.state
     try {
-      const payload = await axios.post('https://memvers-api.sparcs.org/api/edalias', { added, removed }, {withCredentials: true})
-      if (payload.data.expired) window.location.href = '/login'
-      else if (payload.data.result) alert('Update success')
+      const { notLoggedIn, data } = await api.post('/mailing', { added, removed })
+      if (notLoggedIn) return
+
+      if (data.success)
+        alert('Update success')
+      else
+        throw new Error(`Failed to update: ${data}`)
     } catch (err) {
       alert(err)
     }

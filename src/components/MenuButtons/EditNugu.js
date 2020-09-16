@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import axios from 'axios';
 
 import EditNuguStyle from './EditNugu.css'
 import { TextField, Button, Checkbox } from '@material-ui/core';
 
+import api from '../api'
 import defaultStyle from './default.css'
 
 import { propertyName } from '../utils'
@@ -14,13 +14,17 @@ export default class EditNugu extends Component {
 
   componentDidMount = async () => {
     try {
-      const payload = await axios.get('https://memvers-api.sparcs.org/api/nugu', {withCredentials: true})
-      if (payload.data.expired) window.location.href = '/login'
-      else if (payload.data.result) {
-        this.setState({ obj: payload.data.obj })
+      const { notLoggedIn, data } = await api.get('/nugu')
+      if (notLoggedIn) return
+
+      if (data.success) {
+        this.setState({ obj: data.obj })
+        return
       }
+
+      throw new Error(`Unknown Error: ${JSON.stringify(data)}`)
     } catch (err) {
-      console.log(err)
+      alert(err)
     }
   }
 
@@ -85,9 +89,14 @@ export default class EditNugu extends Component {
   save = async () => {
     const { obj } = this.state
     try {
-      const payload = await axios.post('https://memvers-api.sparcs.org/api/nugu', { nobj: obj }, {withCredentials: true})
-      if (payload.data.expired) window.location.href = '/login'
-      else if (payload.data.result) alert('Update success.')
+      const { notLoggedIn, data } = await axios.post('/nugu', { nobj: obj })
+      if (notLoggedIn) return
+
+      if (data.success) {
+        alert('Update success.')
+      }
+
+      throw new Error(`Unknown Error: ${JSON.stringify(data)}`)
     } catch (error) {
       alert(error)
     }

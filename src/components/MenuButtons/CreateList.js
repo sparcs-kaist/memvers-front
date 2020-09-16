@@ -48,19 +48,34 @@ export default class CreateList extends Component {
   createList = async () => {
     const { name, description } = this.state;
     const queryBody = {
-      name,
       desc: description
     }
 
     if (this.acceptable(name)) {
       try {
-        const payload = await axios.post('https://memvers-api.sparcs.org/api/create', queryBody, {withCredentials: true})
-        if (payload.data.expired) {
-          window.location.href = '/login'
-        } else if (payload.data.result) {
-          alert('succesfully created')
-        } else {
-          alert('The list already exist.')
+        const { data, notLoggedIn } = await axios.put(`/mailing/${name}`, queryBody)
+        if (notLoggedIn) return
+
+        if (data.success) {
+          alert('Succesfully created')
+          return
+        }
+
+        switch (data.error) {
+          case 0:
+            alert('The mailing list already exists!')
+            return
+
+          case 1:
+            alert('Internal Server Error')
+            return
+
+          case 2:
+            alert('Description is not given')
+            return
+
+          default:
+            throw new Error(`Unknown error: ${JSON.stringify(data)}`)
         }
       } catch (err) {
         alert(err)

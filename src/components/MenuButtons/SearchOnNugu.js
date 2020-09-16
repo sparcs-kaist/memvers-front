@@ -28,25 +28,32 @@ export default class SearchOnNugu extends Component {
   search = async (e) => {
     const { querydata } = this.state
     try {
-      const payload = await axios.post('https://memvers-api.sparcs.org/api/nugus', { name: querydata }, {withCredentials: true})
-      if (payload.data.expired) {
-        window.location.href = '/login'
-      } else if (payload.data.objs) {
-        this.setState({ objs: payload.data.objs })
-      } else if (!payload.data.objs) {
-        this.setState({
-          noresult: false,
-        })
-        this.setState({
-          objs: null,
-          noresult: true,
-        })
-        setTimeout(() => {
-          this.setState({
-            noresult: false,
-          })
-        }, 1500)
+      const { notLoggedIn, data } = await axios.get(`/nugu/${querydata}`)
+      if (notLoggedIn) return
+
+      if (data.objs) {
+        this.setState({ objs: data.objs })
+        return
       }
+
+      this.setState({
+        noresult: false
+      })
+
+      const key = Math.random().toString(36).slice(2)
+      this.setState({
+        objs: null,
+        noresult: key
+      })
+
+      setTimeout(() => {
+        if (this.state.noresult !== key)
+          return
+
+        this.setState({
+          noresult: false
+        })
+      }, 1500)
     } catch (err) {
       alert(err)
     }
