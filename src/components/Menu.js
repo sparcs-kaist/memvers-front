@@ -16,6 +16,7 @@ import SearchOnNugu from './MenuButtons/SearchOnNugu'
 
 import MenuStyle from './Menu.css'
 import EditNugu from './MenuButtons/EditNugu'
+import EdaliasAll from './MenuForWheel/EdaliasAll'
 import AddUser from './MenuForWheel/AddUser'
 import DeleteUser from './MenuForWheel/DeleteUser'
 import WheelChangePassword from './MenuForWheel/ChangePassword'
@@ -43,7 +44,7 @@ export default class Menu extends Component {
       const randomText = this.randomText()
       await this.setState({ user: data.un, randomText, randomEmoji })
     } catch (err) {
-      // alert(err)
+      alert(err)
     }
   }
 
@@ -76,21 +77,22 @@ export default class Menu extends Component {
       "( ﾟ▽ﾟ)/",
       "ᕕ( ᐛ )ᕗ",
       "(◕‿◕✿)",
-      "╰(‘ω’ )╯",
+      "╰(‘ω’ )╯"
     ]
-    return randomEmoji[Math.floor(Math.random() * 3)]
+    return randomEmoji[Math.floor(Math.random() * randomEmoji.length)]
   }
 
   randomText = () => {
-    const rendomText = [
+    const randomText = [
       "반가워요, ",
       "안녕하세요, ",
       "어서와요, ",
       "기다렸어요, ",
       "잘 왔어요, ",
       "반갑네요, ",
+      "오랜만이에요, "
     ]
-    return rendomText[Math.floor(Math.random() * 3)]
+    return randomText[Math.floor(Math.random() * randomText.length)]
   }
 
   renderTitle = () => {
@@ -108,9 +110,15 @@ export default class Menu extends Component {
         </div>
         <img src={require('../images/exclamation-mark.png')} style={{width: 20, marginTop: 10}}/>
         <div style={{fontSize: '0.9rem'}}>
-          <span style={{color: 'rgb(220,50,50)'}}>현재 메일 포워딩 기능이 정상적으로 동작하지 않습니다.</span> 메일링 리스트를 받아보기 위해서는, 하단의 PDF 설명을 따라 메일 클라이언트에서 설정해주어야 합니다.
+          <span style={{color: 'rgb(220,50,50)'}}>현재 메일 포워딩 기능이 정상적으로 동작하지 않습니다.</span><br />
+          메일링 리스트를 받아보기 위해서는, 하단의 PDF 설명을 따라 메일 클라이언트에서 설정해주어야 합니다.
         </div>
-        <a href="https://drive.google.com/file/d/1Rcm1eEUI8y0-jSEgziQQboNcfUBz0wjp/view" alt="메일함 설정" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
+        
+        <a
+          href="https://drive.google.com/file/d/1Rcm1eEUI8y0-jSEgziQQboNcfUBz0wjp/view"
+          alt="메일함 설정" target="_blank" rel="noopener noreferrer"
+          style={{textDecoration: 'none'}}
+        >
           <div className={MenuStyle.pdfContainer}>
             메일 클라이언트 설정법
           </div>
@@ -119,156 +127,148 @@ export default class Menu extends Component {
     )
   }
 
-  renderMenus = () => {
-    const menus = [
-      {
-        name: "비밀번호 변경",
-        component: <ChangePassword />
-      },{
-        name: "세 메일링 리스트 생성",
-        component: <CreateList />
-      },{
-        name: "메일 포워딩 설정",
-        component: <Forwarding />
-      },{
-        name: "메일링 리스트 설정",
-        component: <Edalias />
-      },{
-        name: "나의 Nugu 정보",
-        component: <EditNugu />
-      },{
-        name: "Nugu 에서 검색하기",
-        component: <SearchOnNugu />
-    }
-    ].map((menu, i) => {
-      if (this.state.user == 'wheel' && menu.name == "나의 Nugu 정보") return null
-      else if (menu.name == '메일 포워딩 설정') {
-        return (
-          <ExpansionPanel
-            disabled
-            expanded = {this.state.expanded == menu.name}
-            onChange = {() => this.handleChange(menu.name)}
-            key={i}
-          >
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <div style={{display: 'flex', flexDirection: 'column'}}>
-                {menu.name}
-                <span style={{fontSize: '0.8rem', color: 'red'}}>
-                  현재 동작하지 않습니다.
-                </span>
-              </div>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              {menu.component}
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-        )
-      }
-      else return (
+  renderMenus = menuDescription => {
+    if (!this.state.user) return null
+    
+    return menuDescription.map((menu, i) => {
+      if (this.state.isWheel && menu.noWheel) return null
+      
+      return (
         <ExpansionPanel
-          expanded = {this.state.expanded == menu.name}
-          onChange = {() => this.handleChange(menu.name)}
-          key={i}
+          disabled = { menu.disabled }
+          expanded = { this.state.expanded === menu.name }
+          onChange = { () => this.handleChange(menu.name) }
+          key={ i }
         >
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            {menu.name}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              { menu.name }
+              {
+                menu.disabled ? (
+                  <span style={{fontSize: '0.8rem', color: 'red'}}>
+                    현재 동작하지 않습니다.
+                  </span>
+                ) : null
+              }
+            </div>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            {menu.component}
+            { menu.component }
           </ExpansionPanelDetails>
         </ExpansionPanel>
       )
     })
-
-    return (
-      <div>
-        <div className={MenuStyle.label}>
-          기본 메뉴
-        </div>
-        <div>
-          {menus}
-        </div>
-      </div>
-    )
   }
 
   render() {
     return (
       <div className={MenuStyle.menuContainer}>
-        {this.renderTitle()}
-        {this.renderMenus()}
+        { this.renderTitle() }
+        
+        <div>
+          <div className={MenuStyle.label}>
+            기본 메뉴
+          </div>
+          <div>
+            {
+              this.renderMenus([
+                {
+                  name: "비밀번호 변경",
+                  component: <ChangePassword />
+                },
+                {
+                  name: "새 메일링 리스트 생성",
+                  component: <CreateList isWheel={this.state.isWheel} />
+                },
+                {
+                  name: "메일 포워딩 설정",
+                  component: <Forwarding />,
+                  disabled: true
+                },
+                {
+                  name: "메일링 리스트 설정",
+                  component: <Edalias />
+                },
+                {
+                  name: "나의 Nugu 정보",
+                  component: <EditNugu />,
+                  noWheel: true
+                },
+                {
+                  name: "Nugu 에서 검색하기",
+                  component: <SearchOnNugu />
+                }
+              ])
+            }
+          </div>
+        </div>
+        
         {
-          this.state.isWheel
-          ? (
+          this.state.isWheel ? (
             <div className={MenuStyle.wheelOnlyMenu}>
               <div className={MenuStyle.label}>
-                  Wheel 전용 메뉴
+                Wheel 전용 메뉴
               </div>
               <div>
-                <ExpansionPanel
-                  expanded={this.state.expanded == '회원 비밀번호 변경'}
-                  onChange={() => this.handleChange('회원 비밀번호 변경')}
-                >
-                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    회원 비밀번호 변경
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <WheelChangePassword />
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
-                <ExpansionPanel
-                  expanded={this.state.expanded == '회원 추가'}
-                  onChange={() => this.handleChange('회원 추가')}
-                >
-                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    회원 추가
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <AddUser />
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
-                <ExpansionPanel
-                  expanded={this.state.expanded == '회원 삭제'}
-                  onChange={() => this.handleChange('회원 삭제')}
-                >
-                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    회원 삭제
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <DeleteUser />
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
+                {
+                  this.renderMenus([
+                    {
+                      name: "메일링 리스트 관리",
+                      component: <EdaliasAll />
+                    },
+                    {
+                      name: "회원 비밀번호 변경",
+                      component: <WheelChangePassword />
+                    },
+                    {
+                      name: "회원 추가",
+                      component: <AddUser />
+                    },
+                    {
+                      name: "회원 삭제",
+                      component: <DeleteUser />
+                    }
+                  ])
+                }
               </div>
             </div>
-          ) : (
-            null
-          )
+          ) : null
         }
 
         <div>
           <div className={MenuStyle.informationLabel}>
             기능 설명
           </div>
+
           <div className={MenuStyle.information}>
             <div className={MenuStyle.informationHeader}>
               메일링 리스트
             </div>
             <div className={MenuStyle.informationBody}>
-              sparcs.org 메일 서버로 전달되는 메일링 리스트를 관리합니다. 내가 받아볼 메일링 리스트를 체크하거나, 새로운 메일링 리스트를 생성할 수 있습니다. 예를 들어, sparcsunder 에 체크해두는 것은 sparcsunder@sparcs.org 로 수신되는 메일을 받겠다는 표시입니다.
+              sparcs.org 메일 서버로 전달되는 메일링 리스트를 관리합니다.
+              내가 받아볼 메일링 리스트를 체크하거나, 새로운 메일링 리스트를 생성할 수 있습니다.
+              예를 들어, sparcsunder 에 체크해두는 것은 sparcsunder@sparcs.org 로 수신되는 메일을 받겠다는 표시입니다.
             </div>
           </div>
+
           <div className={MenuStyle.information}>
             <div className={MenuStyle.informationHeader}>
               Nugu
             </div>
             <div className={MenuStyle.informationBody}>
-              Nugu 는 SPARCS 내부의 회원 데이터베이스 관리 서비스입니다. 타 회원의 정보를 검색할 수 있으며 나의 정보를 등록해 제공할 수도 있습니다. 나의 Nugu 정보 메뉴에서 내 정보를 수정할 수 있습니다. 비공개 설정은 SPARCS 공식 홈페이지에서 로그인하지 않은 외부 사용자에게 자신의 정보를 공개할 것인지 여부를 의미합니다.
+              Nugu 는 SPARCS 내부의 회원 데이터베이스 관리 서비스입니다.
+              타 회원의 정보를 검색할 수 있으며 나의 정보를 등록해 제공할 수도 있습니다.
+              나의 Nugu 정보 메뉴에서 내 정보를 수정할 수 있습니다.
+              비공개 설정은 SPARCS 공식 홈페이지에서 로그인하지 않은 외부 사용자에게 자신의 정보를 공개할 것인지 여부를 의미합니다.
             </div>
           </div>
+
           <div className={MenuStyle.warningText}>
             회원의 추가 및 삭제는 wheel 권한이 요구됩니다. 일반 회원은 자신을 삭제하거나 다른 사람을 추가할 수 없습니다.
+            추가로, 메일링 리스트 관리 또한 wheel 권한이 요구됩니다.
           </div>
         </div>
+
         <Button
           variant="contained"
           style={{ width: '100%', height: 45, boxShadow: "none", marginTop: 20, marginBottom: 50}}
@@ -279,7 +279,7 @@ export default class Menu extends Component {
         </Button>
 
         <div className={MenuStyle.credit}>
-          Memvers 2019, made by medowhill / leo
+          Memvers 2020, made by medowhill / leo / nenw
         </div>
         <a href="https://github.com/sparcs-kaist/memvers-front" style={{textDecoration: 'none'}} target="_blank" rel="noopener noreferrer">
           <div className={MenuStyle.githubUrl}>

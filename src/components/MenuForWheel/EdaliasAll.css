@@ -1,0 +1,55 @@
+.eda-container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.list-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.list-container .title {
+  width: 25%;
+  text-align: right;
+  margin-right: 5%;
+}
+
+.list-container .description {
+  font-size: 0.9rem;
+  overflow: hidden;
+  width: 60%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-container .checkbox {
+  margin: 0px;
+}
+
+.section {
+  margin-top: 40px;
+}
+
+.section .title {
+  color: #888888;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.row .primary {
+  flex: 1;
+}
+
+.row .secondary {
+  margin-left: 10px;
+}
