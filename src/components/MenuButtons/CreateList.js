@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
-import { TextField } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
+import { Button, Checkbox, FormControlLabel, TextField } from '@material-ui/core'
 
 import CListStyle from './CreateList.css'
 
@@ -12,6 +11,7 @@ export default class CreateList extends Component {
   state = {
     name: '',
     description: '',
+    hidden: false
   }
 
   isLower = (ch) => {
@@ -42,13 +42,18 @@ export default class CreateList extends Component {
       this.setState({
         description: e.target.value
       })
+    } else if (input == 'isHidden') {
+      this.setState({
+        isHidden: e.target.checked
+      })
     }
   }
 
   createList = async () => {
-    const { name, description } = this.state;
+    const { name, description, isHidden } = this.state;
     const queryBody = {
-      desc: description
+      desc: description,
+      isHidden
     }
 
     if (!this.acceptable(name)) {
@@ -102,6 +107,22 @@ export default class CreateList extends Component {
             label="설명"
             onChange={(e) => this.handleChange(e, 'description')}
           />
+          {
+            this.props.isWheel &&
+            <div style={{marginTop: 10}}>
+              <FormControlLabel
+                value="end"
+                control={
+                  <Checkbox
+                    checked={this.state.isHidden}
+                    onChange={() => this.handleChange(e, 'isHidden')}
+                  />
+                }
+                label="숨겨진 메일링 리스트로 설정"
+                labelPlacement="end"
+              />
+            </div>
+          }
           <Button
             variant="contained"
             color="primary"

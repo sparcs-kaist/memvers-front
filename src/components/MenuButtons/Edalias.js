@@ -10,23 +10,29 @@ export default class Edalias extends Component {
   state = {
     all: null,
     aliases: null,
-    info: null,
     added: [],
     removed: [],
   }
 
-  componentDidMount = async () => {
+  fetchMailingList = async () => {
     try {
       const { notLoggedIn, data } = await api.get('/mailing')
       if (notLoggedIn) return
 
-      const { all, info, aliases } = data
+      const { all, aliases } = data
       this.setState({
-        all, info, aliases
+        all,
+        aliases,
+        added: [],
+        removed: []
       })
     } catch (err) {
-      console.log(err)
+      alert(err)
     }
+  }
+  
+  componentDidMount = async () => {
+    await this.fetchMailingList()
   }
 
   save = async () => {
@@ -34,11 +40,13 @@ export default class Edalias extends Component {
     try {
       const { notLoggedIn, data } = await api.post('/mailing', { added, removed })
       if (notLoggedIn) return
-
-      if (data.success)
+      
+      if (data.success) {
+        await this.fetchMailingList()
         alert('Update success')
-      else
+      } else {
         throw new Error(`Failed to update: ${data}`)
+      }
     } catch (err) {
       alert(err)
     }
@@ -46,50 +54,52 @@ export default class Edalias extends Component {
 
   toggleAlias = (data) => {
     let { aliases, added, removed } = this.state
-    const index1 = aliases.indexOf(data)
-    const index2 = added.indexOf(data)
-    const index3 = removed.indexOf(data)
-    if (index1 > -1) {
-      if (index3 > -1) {
-        removed = removed.filter((item) => item != data)
-        this.setState({ removed })
+    
+    const subscribed = aliases.includes(data)
+    const willSubscribe = added.includes(data)
+    const willUnsubscribe = removed.includes(data)
+    
+    if (subscribed) {
+      if (willUnsubscribe) {
+        removed = removed.filter(item => item !== data)
       } else {
-        removed.push(data)
-        this.setState({ removed })
+        removed = removed.concat(data)
       }
-    } else {
-      if (index2 > -1) {
-        added = added.filter((item) => item != data)
-        this.setState({ added })
-      } else {
-        added.push(data)
-        this.setState({ added })
-      }
+      
+      this.setState({ removed })
+      return
     }
+    
+    if (willSubscribe) {
+      added = added.filter(item => item !== data)
+    } else {
+      added = added.concat(data)
+    }
+    
+    this.setState({ added })
   }
 
   renderContent = () => {
-    const { all, aliases, info, added, removed } = this.state;
-    if (all && aliases && info) {
-      const allComponent = all.map((data, i) => {
-        return (
-          <div key={i} className={EdaliasStyle.listContainer}>
-            <Checkbox
-              checked={(aliases.includes(data) || added.includes(data)) && !removed.includes(data)}
-              className={EdaliasStyle.checkbox}
-              onChange={() => this.toggleAlias(data)}
-            />
-            <div className={EdaliasStyle.title}>
-              {data}
-            </div>
-            <div className={EdaliasStyle.description}>
-              {info[data]}
-            </div>
+    const { all, aliases, added, removed } = this.state;
+    
+    if (!all || !aliases) return null
+    return all.map((data, i) => {
+      return (
+        <div key={i} className={EdaliasStyle.listContainer}>
+          <Checkbox
+            checked={(aliases.includes(data.id) || added.includes(data.id)) && !removed.includes(data.id)}
+            className={EdaliasStyle.checkbox}
+            onChange={() => this.toggleAlias(data.id)}
+          />
+          <div className={EdaliasStyle.title}>
+            { data.id }
           </div>
-        )
-      })
-      return allComponent
-    }
+          <div className={EdaliasStyle.description}>
+            { data.desc }
+          </div>
+        </div>
+      )
+    })
   }
 
   render() {
